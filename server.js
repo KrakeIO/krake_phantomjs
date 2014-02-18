@@ -49,8 +49,9 @@ var processPage = function(krakeQueryObject, callback) {
     kp.use(require('./middlewares/setup_json'));
     kp.use(require('./middlewares/include_jquery'));
     kp.use(require('./middlewares/waitup'));
-    kp.use(require('./middlewares/click_elements'));    
+    kp.use(require('./middlewares/click_elements'));
     kp.use(require('./middlewares/dom_elements'));
+    kp.use(require('./middlewares/var_query'));    
     kp.use(require('./middlewares/next_page_get'));
     kp.use(require('./middlewares/next_page_click'));
     kp.use(require('./middlewares/close_page'));

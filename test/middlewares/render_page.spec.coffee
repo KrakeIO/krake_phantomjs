@@ -6,7 +6,7 @@ request = require 'request'
 testClient = require '../fixtures/test_client'
 
 # Running test server
-app = app = require '../fixtures/test_server'
+app = require '../fixtures/test_server'
 
 describe "render_page", ()->
 
@@ -42,8 +42,8 @@ describe "render_page", ()->
     )
 
     testClient post_data, (response_obj)=>
-        expect(fs.readdirSync(@test_folder).length).toEqual 3
-        expect(fs.existsSync @test_folder + "screen-shot.pdf").toBe true
-        expect(fs.existsSync @test_folder + "screen-capture.html").toBe true
-        done() 
+      expect(fs.readdirSync(@test_folder).length).toEqual 3
+      expect(fs.existsSync @test_folder + "screen-shot.pdf").toBe true
+      expect(fs.existsSync @test_folder + "screen-capture.html").toBe true
+      done() 
 
