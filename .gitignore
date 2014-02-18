@@ -2,5 +2,6 @@ node_modules/*/**
 node_modules/*/**
 node_modules/
 temp/*.pdf
+temp/*.html
 logs/
 logs/server_log
