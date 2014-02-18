@@ -8,7 +8,7 @@ testClient = require '../fixtures/test_client'
 # Running test server
 app = app = require '../fixtures/test_server'
 
-describe "phantom server render testing", ()->
+describe "render_page", ()->
 
   beforeEach ()->
     @test_folder = __dirname + '/../../temp/'

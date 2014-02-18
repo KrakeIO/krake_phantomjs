@@ -1,6 +1,6 @@
 setHeader = require '../../middlewares/set_headers'
 
-describe "ensures headers are set properly", ()->
+describe "set_headers", ()->
   it "should not set header for facebook", (done)->  
     page =
       settings : []

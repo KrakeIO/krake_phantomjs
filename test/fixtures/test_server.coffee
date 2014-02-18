@@ -36,6 +36,9 @@ app.get '/next_page_ajax', (req, res)->
 app.get '/next_page_ajax_double', (req, res)->
   res.render 'next_page_ajax_double'
 
+app.get '/var_query', (req, res)->
+  res.render 'var_query'
+
 app.get '/success_delayed', (req, res)->
   setTimeout ()=>
     res.render 'success'

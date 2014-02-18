@@ -4,7 +4,7 @@ KSON = require 'kson'
 request = require 'request'
 testClient = require '../fixtures/test_client'
 
-describe "Next page", ()->
+describe "Next page get", ()->
 
   app = false
   beforeEach ()=>

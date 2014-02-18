@@ -6,7 +6,7 @@ testClient = require '../fixtures/test_client'
 
 app = require '../fixtures/test_server'
 
-describe "phantom server cookie testing", ()->
+describe "open_page", ()->
 
   beforeEach ()=>  
     app.listen 9999

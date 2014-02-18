@@ -1,6 +1,6 @@
 setCookies = require '../../middlewares/set_cookies'
 
-describe "ensures cookies are set properly", ()->
+describe "set_cookies", ()->
       
   it "should not set cookies to phantom", (done)->
     global.phantom = {}
