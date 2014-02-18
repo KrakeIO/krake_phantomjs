@@ -6,13 +6,11 @@ testClient = require '../fixtures/test_client'
 
 jasmine.getEnv().defaultTimeoutInterval = 20000
 
+app = require '../fixtures/test_server'
+
 describe "Next page click", ()->
 
-  app = false
   beforeEach ()=>
-  
-    # Running test server
-    app = require '../fixtures/test_server'
     app.listen 9999
   
   afterEach ()=>

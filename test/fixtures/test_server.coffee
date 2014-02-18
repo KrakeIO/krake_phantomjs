@@ -41,6 +41,11 @@ app.get '/success_delayed', (req, res)->
     res.render 'success'
   , 500
 
+app.post '/open_post_page', (req, res)->
+  pageBody = '<html><body><div id="value1">' + req.body.param1 + '</div>' +
+    '<div id="value2">' + req.body.param2 + '</div></body></html>'
+  res.send pageBody
+
 app.get '/json-obj', (req, res)->
   res.send { payload: "some text"}
 

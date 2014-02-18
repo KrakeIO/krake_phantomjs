@@ -3,17 +3,10 @@ express = require 'express'
 http = require 'http'
 KSON = require 'kson'
 request = require 'request'
+testClient = require '../fixtures/test_client'
 
 # Running test server
-app = express.createServer()
-app.configure ()->
-  app.use(express.cookieParser())
-  app.use(express.bodyParser())
-  app.use(app.router)
-app.post '/', (req, res)->
-  pageBody = '<html><body><div id="value1">' + req.body.param1 + '</div>' +
-    '<div id="value2">' + req.body.param2 + '</div></body></html>'
-  res.send pageBody
+app = app = require '../fixtures/test_server'
 
 describe "phantom server render testing", ()->
 
@@ -48,26 +41,9 @@ describe "phantom server render testing", ()->
       "render": true
     )
 
-    post_options = 
-      host: 'localhost'
-      port: 9701
-      path: '/extract'
-      method: 'POST'
-      headers:
-        'Content-Type': 'application/json'
-        'Content-Length': post_data.length
-
-    post_req = http.request post_options, (res)=>
-      res.setEncoding('utf8');
-      res.on 'data', (raw_data)=>
-        response_obj = KSON.parse raw_data
+    testClient post_data, (response_obj)=>
         expect(fs.readdirSync(@test_folder).length).toEqual 3
         expect(fs.existsSync @test_folder + "screen-shot.pdf").toBe true
         expect(fs.existsSync @test_folder + "screen-capture.html").toBe true
         done() 
-
-
-    # write parameters to post body
-    post_req.write(post_data)
-    post_req.end()
 
