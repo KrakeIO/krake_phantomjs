@@ -11,18 +11,27 @@ var domElements = function(page, krakeQueryObject, next) {
       return col.var_query;
 
     }).forEach(function(col) {
-      selected_val = eval(col.var_query);
+      try {
+        selected_val = eval(col.var_query);
 
-      if(typeof selected_val == "string"){
+      } catch(error) {
+        selected_val = "[PHANTOM_SERVER] variable not found";
+        
+      }
+
+      if(typeof selected_val == "string") {
         results.result_rows[0] = results.result_rows[0] || {};
         results.result_rows[0][col.col_name] = selected_val;
 
-      } else if (selected_val instanceof Array) {
+      } else if(selected_val instanceof Array) {
         for(var x = 0; x < selected_val.length ; x++) {
           results.result_rows[x] = results.result_rows[x] || {};
           results.result_rows[x][col.col_name] = selected_val[x];
         }
-      } 
+      } else if(typeof selected_val == 'object') {
+        results.result_rows[0] = results.result_rows[0] || {};
+        results.result_rows[0][col.col_name] = selected_val;        
+      }
 
     })
 

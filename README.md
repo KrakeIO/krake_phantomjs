@@ -1,18 +1,41 @@
 # phantomjs_server
-by Team at [Krake.IO] (https://krake.io)
-
-## Overview
-A standalone phantomjs server that takes in a Krake definitions via HTTP post/RESTFUL API and returns an array of scraped results
+PhantomJS Plugin-Based server that interprets a data definition via HTTP post/RESTFUL API and returns an array of scraped results
 from a single corresponding Web Page.
 
-## Requirements
-- PhantomJS 1.8.1
+## Sample calls
+#### Fetching iPhone product name and price from amazon
+```console
+curl -v \
+  -H "Accept: application/json" \
+  -H "Content-type: application/json" \
+  -X POST \
+  -d '{ "origin_url" : "http://www.amazon.com/Apple-iPhone-16GB-Black-Verizon/dp/B004ZLV5UE", "columns" : [{ "col_name" : "product name", "dom_query" : "#productTitle" }, { "col_name" : "product price", "dom_query" : "#priceblock_ourprice" }] }' \
+  http://localhost:9701/extract
+```
 
-## General settings
+#### To scrape a single page on yahoo
+```console
+coffee simple_client.coffee
+```
+
+## Reference to full API
+see [Krake Definition API] (https://krake.io/docs/define-krake)
+
+## Running the harvesting service
+```console
+phantomjs server.js
+```
+
+## Setup
+- PhantomJS 1.9.2
+
+#### General settings
 - The PhantomJS server will reside on port 9701
 - The main file to call in this repository is server.js
 
-## File System
+## Documentation
+
+#### File System
 
 - server.js
     - the main phantomJS server
@@ -26,21 +49,8 @@ from a single corresponding Web Page.
 - shell/
     - the shell script for restarting the phantomjs server background process
 
-## To start server
-```console
-phantomjs server.js
-```
-
-## To scrape a single page on yahoo
-```console
-coffee simple_client.coffee
-```
-
-## To do unit testing
+## Unit testing
 ```console
 phantomjs server.js # Start service
 jasmine-node --coffee test # do unit test against server
 ```
-
-## Reference to full API
-see [Krake Definition API] (https://krake.io/docs/define-krake)

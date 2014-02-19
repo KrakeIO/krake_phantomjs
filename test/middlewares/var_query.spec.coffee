@@ -65,30 +65,38 @@ describe "var_query", ()->
 
     testClient post_data, (response_obj)=>
       expect(response_obj.message.result_rows[0]['some html stuff']).toEqual "somecontent1"
-      expect(response_obj.message.result_rows[1]['some html stuff']).toEqual "somecontent2"      
+      expect(response_obj.message.result_rows[1]['some html stuff']).toEqual "somecontent2"
       expect(response_obj.message.result_rows[0]['dom_variable']).toEqual "array_value1"
       expect(response_obj.message.result_rows[1]['dom_variable']).toEqual "array_value2"
       done()
 
-  # it "should extract nested attributes in the variable JSON object", (done)->
-  #   post_data = KSON.stringify(
-  #     "origin_url": "http://localhost:9999/var_query_nested_json"
-  #     "columns": [{
-  #         "col_name": "some html stuff"
-  #         "var_query": "something[0]"
-  #     }]
-  #   ) 
-  #   testClient post_data, (response_obj)=>
-  #     done()
+  it "should extract nested attributes in the variable JSON object", (done)->
+    post_data = KSON.stringify(
+      "origin_url": "http://localhost:9999/var_query"
+      "columns": [{
+          "col_name": "dom_variable"
+          "var_query": "my_json_obj['my_attr1']"
+      }]
+    ) 
+    testClient post_data, (response_obj)=>
+      expect(response_obj.message.result_rows[0]['dom_variable']).toEqual "This is a JSON object"
+      done()
 
-  # it "should not crash server when given a var_query object that extracts attributes from a non-existent JSON variable", (done)->
-  #   post_data = KSON.stringify(
-  #     "origin_url": "http://localhost:9999/var_query_non_existent_json"
-  #     "columns": [{
-  #       "col_name": "variable in dom"
-  #       "var_query": "something"
-  #     }]
-  #   )
+  it "should not crash server when given a var_query object that extracts attributes from a non-existent JSON variable", (done)->
+    post_data = KSON.stringify(
+      "origin_url": "http://localhost:9999/var_query"
+      "columns": [{
+          "col_name": "variable in dom"
+          "var_query": "no_valid"
+        },{
+          "col_name": "some html stuff"
+          "dom_query": "div.something"        
+      }]
+    )
+    testClient post_data, (response_obj)=>
+      expect(response_obj.message.result_rows[0]['some html stuff']).toEqual "somecontent1"
+      expect(response_obj.message.result_rows[0]['variable in dom']).toEqual "[PHANTOM_SERVER] variable not found"
+      expect(response_obj.message.result_rows[1]['some html stuff']).toEqual "somecontent2"
+      done()
 
-  #   testClient post_data, (response_obj)=>
-  #     done() 
+
