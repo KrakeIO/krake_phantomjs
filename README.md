@@ -9,7 +9,15 @@ curl -v \
   -H "Accept: application/json" \
   -H "Content-type: application/json" \
   -X POST \
-  -d '{ "origin_url" : "http://www.amazon.com/Apple-iPhone-16GB-Black-Verizon/dp/B004ZLV5UE", "columns" : [{ "col_name" : "product name", "dom_query" : "#productTitle" }, { "col_name" : "product price", "dom_query" : "#priceblock_ourprice" }] }' \
+  -d '{ 
+    "origin_url" : "http://www.amazon.com/Apple-iPhone-16GB-Black-Verizon/dp/B004ZLV5UE", 
+    "columns" : [{ 
+      "col_name" : "product name", 
+      "dom_query" : "#productTitle" 
+    }, { 
+      "col_name" : "product price", 
+      "dom_query" : "#priceblock_ourprice" 
+    }] }' \
   http://localhost:9701/extract
 ```
 
