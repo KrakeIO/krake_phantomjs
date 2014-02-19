@@ -32,6 +32,7 @@ var domElements = function(page, krakeQueryObject, next) {
           "\r\n\t\tcol_name:" + curr_column.col_name +
           "\r\n\t\tdom_query:" + curr_column.dom_query);
         
+        // Fetches the results into rows
         if(!curr_column.is_compound) {
           var jquery_results = jQuery(curr_column.dom_query);
           for (var y = 0; y < jquery_results.length ; y++ ) {
@@ -39,7 +40,8 @@ var domElements = function(page, krakeQueryObject, next) {
             curr_result_row[curr_column['col_name']] = extractDomAttributes(jquery_results[y], curr_column['required_attribute']);
             results.result_rows[y] = curr_result_row;
           }
-          
+        
+        // Joins all the values into a single row
         } else {
           var jquery_results = [];
           jQuery(curr_column.dom_query).map(function(index, item) {
@@ -57,6 +59,7 @@ var domElements = function(page, krakeQueryObject, next) {
           "\r\n\t\tcol_name:" + curr_column.col_name +
           "\r\n\t\tdom_query:" + curr_column.dom_query);
           
+        // Fetches the results into rows
         if(!curr_column.is_compound) {
           var query_results = document.querySelectorAll(curr_column.dom_query);
           for (var y = 0; y < query_results.length ; y++ ) {
@@ -64,7 +67,8 @@ var domElements = function(page, krakeQueryObject, next) {
             curr_result_row[curr_column['col_name']] = extractDomAttributes(query_results[y], curr_column['required_attribute']);
             results.result_rows[y] = curr_result_row;
           }
-          
+        
+        // Joins all the values into a single row
         } else {
           var query_results = document.querySelectorAll(curr_column.dom_query);
           var final_results = [];
@@ -88,6 +92,7 @@ var domElements = function(page, krakeQueryObject, next) {
         var curr_item;
         var y = 0;
         
+        // Fetches the results into rows
         if(!curr_column.is_compound) {
           while(curr_item = xPathResults.iterateNext()) {
             var curr_result_row = results.result_rows[y] || {}; 
@@ -95,7 +100,8 @@ var domElements = function(page, krakeQueryObject, next) {
             results.result_rows[y] = curr_result_row;
             y++;
           }
-          
+        
+        // Joins all the values into a single row
         } else {
           var final_results = [];
           while(curr_item = xPathResults.iterateNext()) {
