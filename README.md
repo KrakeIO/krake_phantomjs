@@ -44,6 +44,7 @@ coffee simple_client.coffee
 ```
 
 #### Response from server
+```console
 {
   "result_rows":[{
     "address" : "90 Tremont St, Boston, MA, 02108",
