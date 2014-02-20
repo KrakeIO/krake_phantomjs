@@ -18,12 +18,49 @@ curl -v \
       "col_name" : "product price", 
       "dom_query" : "#priceblock_ourprice" 
     }] }' \
-  http://localhost:9701/extract
+  http://krake.io:9701/extract
+```
+
+#### Response from server
+```console
+{
+  "status" : "success",
+  "message" : {
+    "logs" : [
+      "[PHANTOM_SERVER] extract using jQuery\r\n\t\tcol_name:product name\r\n\t\tdom_query:#productTitle",
+      "[PHANTOM_SERVER] extract using jQuery\r\n\t\tcol_name:product price\r\n\t\tdom_query:#priceblock_ourprice"
+    ],
+    "result_rows":[{
+      "product name" : "Apple iPhone 4 16GB (Black) - CDMA Verizon",
+      "product price" : "$219.95"
+    }]
+  }
+}
 ```
 
 #### To scrape a single page on yahoo
 ```console
 coffee simple_client.coffee
+```
+
+#### Response from server
+{
+  "result_rows":[{
+    "address" : "90 Tremont St, Boston, MA, 02108",
+    "hotel" : "Nine Zero Hotel, A Kimpton Hotel",
+    "phone" : "(617) 772-5800","web":"www.ninezero.com"
+  },{
+    "address" : "40 Dalton St, Boston, MA, 02115",
+    "hotel" : "Hilton Boston Back Bay",
+    "phone" : "(617) 236-1100",
+    "web" : "www3.hilton.com"
+  },{
+    "address" : "155 Portland St, Boston, MA, 02114",
+    "hotel" : "Onyx Hotel, A Kimpton Hotel",
+    "phone" : "(617) 557-9955",
+    "web" : "www.onyxhotel.com"
+  }]
+}
 ```
 
 ## Reference to full API
