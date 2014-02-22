@@ -14,7 +14,7 @@ var openPage = function(page, krakeQueryObject, next) {
   	if(status !== 'success') {
   	  console.log('[PHANTOM_SERVER] failed to open page.');
   	  krakeQueryObject.jobStatus = 'error'
-      krakeQueryObject.jobResults = 'page opening failed'  	  
+      krakeQueryObject.jobResults = { result_rows: [] }
       page.close();
   	} 
     next();  	
