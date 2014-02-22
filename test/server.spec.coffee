@@ -223,7 +223,7 @@ describe "testing Krake definition with no origin url", ()->
       done() 
     
 describe "testing against non-existant url", ()->
-  it "should respond with error and error message ", (done)->
+  it "should respond with error and error an empty array for result_rows attribute in message object ", (done)->
     post_data = KSON.stringify(
       origin_url : 'http://somewhere_over_the_rainbow'
       columns: [{
@@ -252,7 +252,7 @@ describe "testing against non-existant url", ()->
 
     testClient post_data, (response_obj)-> 
       expect(response_obj.status).toEqual "error"
-      expect(response_obj.message).toBe "page opening failed"
+      expect(response_obj.message.result_rows).toEqual []
       done() 
     
 describe "test JSON parse UTF8 in phantomjs", ()->
