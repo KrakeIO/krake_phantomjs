@@ -31,7 +31,7 @@ var nextPageGet = function(page, krakeQueryObject, next) {
         var xPathResults = document.evaluate(krakeQueryObject.next_page.xpath, document);
         var xpath_np;
         while(xpath_np = xPathResults.iterateNext()) {
-           results.next_page = extractDomAttributes(xpath_np, 'href');
+           results.next_page = KrakeDomElements.extractDomAttributes(xpath_np, 'href');
         } 
       
       // when jQuery selector is to be used             
@@ -39,14 +39,14 @@ var nextPageGet = function(page, krakeQueryObject, next) {
         results.logs.push("[PHANTOM_SERVER] extracting next page using jQuery" + 
             "\r\n\t\tdom_query : " + krakeQueryObject.next_page.dom_query);
         var jquery_np = jQuery(krakeQueryObject.next_page.dom_query);
-        jquery_np.length && ( results.next_page = extractDomAttributes(jquery_np[0], 'href') );
+        jquery_np.length && ( results.next_page = KrakeDomElements.extractDomAttributes(jquery_np[0], 'href') );
         
       // when jQuery has been explicitly excluded
       } else if(  (typeof jQuery != "function") && krakeQueryObject.next_page && krakeQueryObject.next_page.dom_query) {
         results.logs.push("[PHANTOM_SERVER] extracting next page using querySelectorAll" + 
             "\r\n\t\tdom_query : " + krakeQueryObject.next_page.dom_query);
         var jquery_np = document.querySelectorAll(krakeQueryObject.next_page.dom_query);
-        jquery_np.length && ( results.next_page = extractDomAttributes(jquery_np[0], 'href' ) );
+        jquery_np.length && ( results.next_page = KrakeDomElements.extractDomAttributes(jquery_np[0], 'href' ) );
       
       }      
 

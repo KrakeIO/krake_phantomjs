@@ -37,7 +37,7 @@ var domElements = function(page, krakeQueryObject, next) {
           var jquery_results = jQuery(curr_column.dom_query);
           for (var y = 0; y < jquery_results.length ; y++ ) {
             var curr_result_row = results.result_rows[y] || {};
-            curr_result_row[curr_column['col_name']] = extractDomAttributes(jquery_results[y], curr_column['required_attribute']);
+            curr_result_row[curr_column['col_name']] = KrakeDomElements.extractDomAttributes(jquery_results[y], curr_column['required_attribute']);
             results.result_rows[y] = curr_result_row;
           }
         
@@ -45,7 +45,7 @@ var domElements = function(page, krakeQueryObject, next) {
         } else {
           var jquery_results = [];
           jQuery(curr_column.dom_query).map(function(index, item) {
-            jquery_results.push(extractDomAttributes(item, curr_column['required_attribute']));
+            jquery_results.push(KrakeDomElements.extractDomAttributes(item, curr_column['required_attribute']));
           });
           var curr_result_row = results.result_rows[0] || {};
           curr_result_row[curr_column['col_name']] = jquery_results.join();
@@ -64,7 +64,7 @@ var domElements = function(page, krakeQueryObject, next) {
           var query_results = document.querySelectorAll(curr_column.dom_query);
           for (var y = 0; y < query_results.length ; y++ ) {
             var curr_result_row = results.result_rows[y] || {};
-            curr_result_row[curr_column['col_name']] = extractDomAttributes(query_results[y], curr_column['required_attribute']);
+            curr_result_row[curr_column['col_name']] = KrakeDomElements.extractDomAttributes(query_results[y], curr_column['required_attribute']);
             results.result_rows[y] = curr_result_row;
           }
         
@@ -73,7 +73,7 @@ var domElements = function(page, krakeQueryObject, next) {
           var query_results = document.querySelectorAll(curr_column.dom_query);
           var final_results = [];
           for (var y = 0; y < query_results.length ; y++ ) {
-            final_results.push(extractDomAttributes(query_results[y], curr_column['required_attribute']));
+            final_results.push(KrakeDomElements.extractDomAttributes(query_results[y], curr_column['required_attribute']));
           }
           var curr_result_row = results.result_rows[0] || {};
           curr_result_row[curr_column['col_name']] = final_results.join();
@@ -96,7 +96,7 @@ var domElements = function(page, krakeQueryObject, next) {
         if(!curr_column.is_compound) {
           while(curr_item = xPathResults.iterateNext()) {
             var curr_result_row = results.result_rows[y] || {}; 
-            curr_result_row[ curr_column['col_name'] ] = extractDomAttributes(curr_item, curr_column['required_attribute']);
+            curr_result_row[ curr_column['col_name'] ] = KrakeDomElements.extractDomAttributes(curr_item, curr_column['required_attribute']);
             results.result_rows[y] = curr_result_row;
             y++;
           }
@@ -105,7 +105,7 @@ var domElements = function(page, krakeQueryObject, next) {
         } else {
           var final_results = [];
           while(curr_item = xPathResults.iterateNext()) {
-            final_results.push(extractDomAttributes(curr_item, curr_column['required_attribute']));
+            final_results.push(KrakeDomElements.extractDomAttributes(curr_item, curr_column['required_attribute']));
           }
           var curr_result_row = results.result_rows[0] || {};
           curr_result_row[curr_column['col_name']] = final_results.join();
