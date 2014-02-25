@@ -1,0 +1,103 @@
+<script src='3p/js/jquery.js'></script>
+<script>
+  var computeResponses = function() {
+    res1 = jQuery('input[type="radio"]:checked').val() + ' ' +
+      jQuery('option:checked').val() + ' ' +
+      jQuery('input[type="checkbox"]:checked').val() + ' ' +
+      jQuery('.divs .selected').html() + ' ' +
+      jQuery('.images .selected_img').attr('src');
+
+    res2 = jQuery('.images .selected_img').attr('src') + ' ' +
+      jQuery('.divs .selected').html() + ' ' +
+      jQuery('input[type="checkbox"]:checked').val() + ' ' +
+      jQuery('option:checked').val() + ' ' +
+      jQuery('input[type="radio"]:checked').val();
+
+    jQuery('#response1').html(res1);
+    jQuery('#response2').html(res2);
+  };
+
+  jQuery(document).ready(function() {
+
+    jQuery('input[type="radio"]').click(computeResponses);
+    jQuery('input[type="checkbox"]').click(function(e) {
+      jQuery('input[type="checkbox"]').each(function(index, checkbox) {
+        if(e.currentTarget.id != checkbox.id) { jQuery(checkbox).prop('checked', false); }
+      });
+      computeResponses()
+    });    
+
+    jQuery('select').on('change', computeResponses);
+
+    jQuery('.div.clicklables').click(function(e) {
+      if(jQuery(e.currentTarget).hasClass('selected')) {
+        jQuery(e.currentTarget).removeClass('selected');
+      } else {
+        jQuery('.div.clicklables').removeClass('selected');        
+        jQuery(e.currentTarget).addClass('selected');
+      }
+      computeResponses();
+    });
+
+    jQuery('.images .clk_img').click(function(e) {
+      if(jQuery(e.currentTarget).hasClass('selected_img')) {
+        jQuery('.images .clk_img').removeClass('selected_img');
+      } else {
+        jQuery('.images .clk_img').removeClass('selected_img');
+        jQuery(e.currentTarget).addClass('selected_img');
+      }
+      computeResponses();
+    });
+  })
+</script>
+<style>
+  .selected, .selected_img {
+    border: 1px solid #00aa00;
+  }
+  .images .clk_img, .div.clicklables {
+    float:left;
+    margin-right: 20px;
+    width: 100px;
+    cursor: pointer;
+  }
+  .clear {
+    clear:both;
+    margin-top: 30px;
+  }
+</style>
+<div>
+  Radio 1 <input type='radio' name='radio' value='radio1' class='f_elements'>
+  Radio 2 <input type='radio' name='radio' value='radio2' class='f_elements'>
+  Radio 3 <input type='radio' name='radio' value='radio3' class='f_elements'>
+</div>
+
+<div>
+  Select : 
+  <select class='f_elements'>
+    <option name='option' value='option1'>Option 1</option>
+    <option name='option' value='option2'>Option 2</option>
+    <option name='option' value='option3'>Option 3</option>
+  </select>
+</div>
+
+<div>
+  Checkbox 1 <input id='cb1' type='checkbox' name='checkbox[]' value='checkbox1' class='f_elements'>
+  Checkbox 2 <input id='cb2' type='checkbox' name='checkbox[]' value='checkbox2' class='f_elements'>
+  Checkbox 3 <input id='cb3' type='checkbox' name='checkbox[]' value='checkbox3' class='f_elements'>
+</div>
+
+<div class='divs clear'>
+  <div class='div clicklables' class='f_elements'>Division 1</div>
+  <div class='div clicklables' class='f_elements'>Division 2</div>
+  <div class='div clicklables' class='f_elements'>Division 3</div>
+</div>
+
+<div class='images clear'>
+  <image src='img/icon1.jpeg' class='f_elements clk_img'>
+  <image src='img/icon2.jpeg' class='f_elements clk_img'>
+  <image src='img/icon3.jpeg' class='f_elements clk_img'>
+</div>
+
+<div  class='clear'> Response 1 : <span id='response1'></span> </div>
+<div  class='clear'> Response 2 : <span id='response2'></span> </div>
+

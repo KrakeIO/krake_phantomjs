@@ -54,6 +54,9 @@ app.get '/json-obj', (req, res)->
 
 app.get '/timeout', (req, res)->
 
+app.get '/form_simple', (req, res)->
+  res.render 'form_simple'
+
 exports = module.exports = app
 
 if !module.parent
