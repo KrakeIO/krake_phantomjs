@@ -1,5 +1,5 @@
 var closePage = function(page, krakeQueryObject, next) {
-  console.log('[PHANTOM_SERVER] closed page\r\n\r\n\r\n');  
+  console.log('  closed page');  
   page.close();
   next();  
 }

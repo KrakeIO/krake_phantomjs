@@ -34,27 +34,29 @@
 var KrakePermute = {
 
   init: function(krake_definition) {
-    var self = this;
+    var self = KrakePermute;
     permuted_columns = krake_definition && krake_definition.permuted_columns || {}
     self.handles =  permuted_columns.handles || [];
     self.responses = permuted_columns.responses || [];
     self.results = [];
+    self.logs = [];
   },
 
   permute : function(){
-    var self = this;    
+    var self = KrakePermute;    
     self.permuteStep(0, 0, {}, function(){
-      console.log("all permutations has been completed");
+      self.logs.push("all permutations has been completed");
     });
   },
 
   permuteStep: function(curr_hdl_index, curr_hdl_items_index, parent_value_chain, callback) {
-    var self = this;
+    var self = KrakePermute;
     curr_hdl_index = curr_hdl_index || 0;
     curr_hdl_items_index = curr_hdl_items_index || 0;
     parent_value_chain = parent_value_chain || {};
 
     curr_col_els = self.getLevelColumnElements(curr_hdl_index);
+
     curr_el = curr_col_els[curr_hdl_items_index];
     self.makeElementSelected(curr_el, self.getLevelChecksum(curr_hdl_index));
     curr_value_chain = self.getExtendedValueChain(parent_value_chain, curr_el, col_query);
@@ -65,7 +67,7 @@ var KrakePermute = {
 
     // When at the deepest level
     } else {
-      self.results = self.results.concat(self.getFullValueChains(curr_value_chain))
+      self.results = self.results.concat(self.getFullValueChains(curr_value_chain));
 
       // Go to next sibiling
       if (curr_hdl_items_index < curr_col_els.length -1) {
@@ -78,7 +80,7 @@ var KrakePermute = {
   },
 
   getExtendedValueChain: function(parent_value_chain, dom_node, column_query) {
-    var self = this;    
+    var self = KrakePermute;    
     parent_value_chain = parent_value_chain || {};
     value_chain = JSON.parse(JSON.stringify(parent_value_chain));
     value_chain = value_chain || {};
@@ -88,7 +90,9 @@ var KrakePermute = {
   },
 
   getFullValueChains: function(value_chain) {
-    var self = this;
+    var self = KrakePermute;
+    if(!self.responses || self.responses.length == 0) return [value_chain];
+
     value_chain = value_chain || {}
     results = []
     self.responses.forEach(function(response_col) {
@@ -105,7 +109,7 @@ var KrakePermute = {
   },
 
   goDeep: function(curr_hdl_index, curr_hdl_items_index, curr_value_chain, parent_value_chain, callback) {
-    var self = this;    
+    var self = KrakePermute;    
     self.permuteStep(curr_hdl_index + 1, 0, curr_value_chain, function() {
       if(curr_hdl_items_index < self.getLevelColumnElements(curr_hdl_index).length - 1)
         self.goWide(curr_hdl_index, curr_hdl_items_index, parent_value_chain, callback);
@@ -113,24 +117,23 @@ var KrakePermute = {
   },
 
   goWide: function(curr_hdl_index, curr_hdl_items_index, parent_value_chain, callback) {
-    var self = this;    
+    var self = KrakePermute;
     self.permuteStep(curr_hdl_index, curr_hdl_items_index + 1, parent_value_chain, callback);
-    var self = this;
   },
 
   getLevelChecksum: function(curr_hdl_index) {
-    var self = this;
+    var self = KrakePermute;
     return self.handles[curr_hdl_index]['selected_checksum'] || false;
   },
 
   getLevelColumnElements: function(curr_hdl_index) {
-    var self = this;
+    var self = KrakePermute;
     col_query = self.handles[curr_hdl_index];
     return self.getColumnElements(col_query);
   },
 
   getColumnElements: function(column_obj) {
-    var self = this;
+    var self = KrakePermute;
     column_obj.dom_query && (curr_col_elements = self.getDomListJquery(column_obj.dom_query));
     column_obj.xpath && (curr_col_elements = self.getDomListXpath(column_obj.xpath));
     curr_col_elements = curr_col_elements || [];
@@ -155,7 +158,7 @@ var KrakePermute = {
   },
 
   makeElementSelected: function(dom_node, class_checksum) {
-    var self = this;
+    var self = KrakePermute;
     switch(dom_node.nodeName) {
       case "OPTION" :
         self.changeSelectIndex(dom_node);
@@ -174,7 +177,7 @@ var KrakePermute = {
   }, 
 
   toggleElementActive: function(dom_node, active_class_checksum) {
-    var self = this;
+    var self = KrakePermute;
 
     self.clickElement(dom_node);
     if(active_class_checksum && !(jQuery(dom_node).hasClass(active_class_checksum) || 

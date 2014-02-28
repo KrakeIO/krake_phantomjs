@@ -36,6 +36,9 @@ app.get '/next_page_ajax', (req, res)->
 app.get '/next_page_ajax_double', (req, res)->
   res.render 'next_page_ajax_double'
 
+app.get '/next_page_non_html', (req, res)->
+  res.render 'next_page_non_html'
+
 app.get '/var_query', (req, res)->
   res.render 'var_query'
 

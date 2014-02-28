@@ -1,9 +1,5 @@
-express = require 'express'
-http = require 'http'
 KSON = require 'kson'
-request = require 'request'
 testClient = require '../fixtures/test_client'
-
 app = require '../fixtures/test_server'
 
 describe "open_page", ()->

@@ -1,8 +1,16 @@
 // @extracts the DOM elements from the page  
 var domElements = function(page, krakeQueryObject, next) {
   
-  //page.render('facebook-phantom.pdf');
-	console.log('[PHANTOM_SERVER] extracting DOM elements');
+  if(!krakeQueryObject.columns || krakeQueryObject.columns.length == 0) {
+    next();
+    return;    
+  }
+
+	console.log("  Extracting DOM elements:");
+  krakeQueryObject.columns.forEach(function(column) {
+    query = column.dom_query || column.xpath
+    console.log("      " + column.col_name + " : " + query);
+  });
 
   // @Description : extracts value from page
   // @return: 
@@ -126,11 +134,14 @@ var domElements = function(page, krakeQueryObject, next) {
     return results;
       
   }, krakeQueryObject); // eo evaluation
-  console.log('[PHANTOM_SERVER] Extraction finished.');
-  console.log('[PHANTOM_SERVER] Processing Query');    
-  console.log(JSON.stringify(krakeQueryObject) + '\r\n\r\n');
-  console.log('[PHANTOM_SERVER] Retrieved Results');        
-  console.log(JSON.stringify(results) + '\r\n\r\n');
+
+  console.log("    results:");
+  results.result_rows.forEach(function(row) {
+    console.log("      row:");
+    Object.keys(row).forEach(function(col_name) {
+      console.log("        " + col_name + " : " + row[col_name])
+    });
+  });
   krakeQueryObject.jobResults = results
   
   next();

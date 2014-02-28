@@ -1,0 +1,28 @@
+<script>
+next_page = function() {
+  console.log("Changing location of the page");
+  jQuery("#to_show").one('load', function() {
+    jQuery.post("/success",function(){
+      jQuery("#status").html("Image loaded and message posted");
+    });
+  });
+  jQuery("#to_show").attr("src", "/img/icon1.jpeg");
+}
+jQuery(document).ready(function() {
+  jQuery("#next_page").click(next_page);
+});
+</script>
+
+<div>
+  <a id='next_page' href='#'>function button</a>
+</div>
+
+<div id='col1'>
+  Value 1
+</div>
+
+<div>
+  <img id='to_show'>
+</div>
+
+<div id='status'></div>

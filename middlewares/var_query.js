@@ -1,15 +1,31 @@
 var domElements = function(page, krakeQueryObject, next) {
 
-  //page.render('facebook-phantom.pdf');
-  console.log('[PHANTOM_SERVER] extracting VAR elements');
+  if(!krakeQueryObject.columns || krakeQueryObject.columns.length == 0) {
+    next();
+    return;
+  }
+
+  var_cols = krakeQueryObject.columns.filter(function(col) { return col.var_query; });
+  if(var_cols.length == 0) {
+    next();
+    return;
+  }
+
+  console.log("  Extracting VAR elements:");
+  var_cols.forEach(function(col) {
+    console.log("      " + col.col_name + " : " + col.var_query);
+  });
+
   results = page.evaluate(function(krakeQueryObject) {  
     var results = krakeQueryObject.jobResults || {};
     results.logs = results.logs || [];
     results.result_rows = results.result_rows || [];
 
+    if(!krakeQueryObject.columns)
+      return results;
+
     var_cols = krakeQueryObject.columns.filter(function(col) {
       return col.var_query;
-
     }).forEach(function(col) {
       try {
         selected_val = eval(col.var_query);
@@ -38,13 +54,15 @@ var domElements = function(page, krakeQueryObject, next) {
     return results;
   }, krakeQueryObject); // eo evaluation
 
-  console.log('[PHANTOM_SERVER] Extraction finished.');
-  console.log('[PHANTOM_SERVER] Processing Query');    
-  console.log(JSON.stringify(krakeQueryObject) + '\r\n\r\n');
-  console.log('[PHANTOM_SERVER] Retrieved Results');        
-  console.log(JSON.stringify(results) + '\r\n\r\n');
-  krakeQueryObject.jobResults = results
+  console.log("    results:");
+  results.result_rows.forEach(function(row) {
+    console.log("      row:");
+    Object.keys(row).forEach(function(col_name) {
+      console.log("        " + col_name + " : " + row[col_name])
+    });
+  });
 
+  krakeQueryObject.jobResults = results
   next();
 }
 

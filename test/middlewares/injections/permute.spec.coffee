@@ -151,4 +151,20 @@ describe "KrakePermute", ->
       results = @kp.getFullValueChains {}
       expect(results.length).toEqual @col_element.length
 
+    it "should return array with one empty object as if responses array is empty and value_chain has no attributes", ->
+      krake_definition_nr = require '../../fixtures/json/permute_definition_no_responses'
+      kp1 = require '../../../middlewares/injections/permute'
+      kp1.init krake_definition_nr
+      results = kp1.getFullValueChains {}
+      expect(results.length).toEqual 1
 
+    it "should return result generated from columns defined in handles in an array if responses array is empty", ->
+      krake_definition_nr = require '../../fixtures/json/permute_definition_no_responses'
+      kp1 = require '../../../middlewares/injections/permute'
+      kp1.init krake_definition_nr
+      results = kp1.getFullValueChains 
+        existing_val_1: "this is val 1"
+        existing_val_2: "this is val 2"
+      expect(results.length).toEqual 1
+      expect(results[0]["existing_val_1"]).toEqual "this is val 1"
+      expect(results[0]["existing_val_2"]).toEqual "this is val 2"
