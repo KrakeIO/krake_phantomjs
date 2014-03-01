@@ -56,6 +56,12 @@ var KrakePermute = {
     parent_value_chain = parent_value_chain || {};
 
     curr_col_els = self.getLevelColumnElements(curr_hdl_index);
+
+    if(!curr_col_els[curr_hdl_items_index]) {
+      self.skipLevel(curr_hdl_index, parent_value_chain, callback);
+      return;
+    }
+
     curr_el = curr_col_els[curr_hdl_items_index];
 
     self.logs.push("permutation step: ");
@@ -123,8 +129,22 @@ var KrakePermute = {
     return KrakeDomElements.extractDomAttributes( dom_node,  required_attribute);
   },
 
+  skipLevel: function(curr_hdl_index, parent_value_chain, callback) {
+    var self = KrakePermute;
+    if(curr_hdl_index < self.handles.length -1) {    
+      self.logs.push("skipping empty level");
+      self.permuteStep(curr_hdl_index + 1, 0, parent_value_chain, callback);
+
+    } else {
+      self.logs.push("no more level to skip to");      
+      self.results = self.results.concat(self.getFullValueChains(parent_value_chain));      
+      callback && callback();
+
+    }
+  },
+
   goDeep: function(curr_hdl_index, curr_hdl_items_index, curr_value_chain, parent_value_chain, callback) {
-    var self = KrakePermute;    
+    var self = KrakePermute;
     self.permuteStep(curr_hdl_index + 1, 0, curr_value_chain, function() {
 
       self.logs.push("finished sub-tree: ");

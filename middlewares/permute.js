@@ -13,7 +13,7 @@ var permute = function(page, krakeQueryObject, next) {
   console.log('    response cols:');
   krakeQueryObject.permuted_columns.responses && krakeQueryObject.permuted_columns.responses.forEach(function(response_col){
     console.log('      ' + response_col.col_name + ' : ' + (response_col.xpath || response_col.dom_query));
-  }); 
+  });
   
 
   page.evaluate(function(krakeQueryObject) {
@@ -29,7 +29,8 @@ var permute = function(page, krakeQueryObject, next) {
 
   permutation_logs = page.evaluate( function() {
     return KrakePermute.logs;
-  });  
+  });
+
   console.log("    logs:");
   permutation_logs.forEach(function(log) {
     console.log("      " + log);
@@ -40,14 +41,16 @@ var permute = function(page, krakeQueryObject, next) {
   results.result_rows = results.result_rows || [];  
 
   combined_results_rows = [];
+  (permutation_results.length > 0) && console.log("    has permutation_results");
+  (results.result_rows.length) && console.log("    has column query results");
+
   if(results.result_rows.length == 0 && permutation_results.length > 0)
     combined_results_rows = permutation_results
 
   else if(results.result_rows.length > 0 && permutation_results.length == 0)
     combined_results_rows = results.result_rows
 
-  else if(results.result_rows > 0 &&  permutation_results.length > 0) {
-
+  else if(results.result_rows.length > 0 &&  permutation_results.length > 0) {
     combined_results_rows = [];
     results.result_rows.forEach(function(curr_ex_result) {
       permutation_results.forEach(function(curr_pm_result) {
@@ -63,9 +66,9 @@ var permute = function(page, krakeQueryObject, next) {
   console.log("    results:");
   console.log("        count:" + combined_results_rows.length);
   combined_results_rows.forEach(function(row) {
-    console.log("      row:");
+    // console.log("      row:");
     Object.keys(row).forEach(function(col_name) {
-      console.log("        " + col_name + " : " + row[col_name])
+      // console.log("        " + col_name + " : " + row[col_name])
     });
   });
 
