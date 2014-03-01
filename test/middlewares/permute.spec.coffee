@@ -298,7 +298,7 @@ describe "permutate", ->
           "dom_query" : ".f_elements.clk_img"
           "selected_checksum" : ".selected_img"
           "required_attribute" : "src"
-        }],
+        }]
         "responses": [{
           "col_name" : "response1"
           "dom_query" : "#response1"
@@ -351,7 +351,6 @@ describe "permutate", ->
 
 
   it "should not fail when declared handles column does not exist and is right at the end of the queue ", (done)->
-
     krake_definition =
       "origin_url" : "http://localhost:9999/form_simple"
       "permuted_columns" :
@@ -369,4 +368,32 @@ describe "permutate", ->
 
     testClient KSON.stringify(krake_definition), (response_obj)-> 
       expect(response_obj.message.result_rows.length).toEqual 9
+      done()
+
+  it "should still extract values from response columns when there is a null handle column ", (done)->
+    krake_definition =
+      "origin_url" : "http://localhost:9999/form_simple"
+      "permuted_columns" :
+        "handles": [{
+            "col_name" : "option value"
+            "dom_query" : "option"          
+          },{
+            "col_name" : "radio value"
+            "dom_query" : "input[type='radio']"
+            "required_attribute" : "value"
+          },{
+            "col_name" : "null column"
+            "dom_query" : "li"
+        }]
+        "responses": [{
+          "col_name" : "response1"
+          "dom_query" : "#response1"
+        },{
+          "col_name" : "response2"
+          "dom_query" : "#response2"
+        }]        
+
+    testClient KSON.stringify(krake_definition), (response_obj)-> 
+      expect(response_obj.message.result_rows.length).toEqual 9
+      expect(typeof response_obj.message.result_rows[0]['response1']).toEqual "string"
       done()
