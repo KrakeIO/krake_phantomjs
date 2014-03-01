@@ -121,6 +121,22 @@ describe "KrakePermute", ->
       expect(typeof go_deep_args[3]).toBe 'function'
       spyOn(@kp, "goWide")
       go_deep_args[3]()
+      expect(@kp.goWide).not.toHaveBeenCalled()
+
+    it "should make parent callback if it is the last element in the level and its sub tree has been traversed ", (done)->
+      finish_callback = ()=>
+        done()
+
+      @kp.goDeep 1, 3, {attr: '111'}, {}, finish_callback
+      go_deep_args = @kp.permuteStep.mostRecentCall.args
+      expect(go_deep_args[0]).toEqual 2
+      expect(go_deep_args[1]).toEqual 0
+      expect(typeof go_deep_args[2]).toBe "object"
+      expect(go_deep_args[2].attr).toEqual '111'
+
+      expect(typeof go_deep_args[3]).toBe 'function'
+      spyOn(@kp, "goWide")
+      go_deep_args[3]()
       expect(@kp.goWide).not.toHaveBeenCalled()      
 
   describe "goWide", ->

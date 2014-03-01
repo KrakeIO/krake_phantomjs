@@ -2,7 +2,7 @@
 <script>
   var computeResponses = function() {
     res1 = jQuery('input[type="radio"]:checked').val() + ' ' +
-      jQuery('option:checked').val() + ' ' +
+      jQuery('select').val() + ' ' +
       jQuery('input[type="checkbox"]:checked').val() + ' ' +
       jQuery('.divs .selected').html() + ' ' +
       jQuery('.images .selected_img').attr('src');
@@ -10,7 +10,7 @@
     res2 = jQuery('.images .selected_img').attr('src') + ' ' +
       jQuery('.divs .selected').html() + ' ' +
       jQuery('input[type="checkbox"]:checked').val() + ' ' +
-      jQuery('option:checked').val() + ' ' +
+      jQuery('select').val() + ' ' +
       jQuery('input[type="radio"]:checked').val();
 
     jQuery('#response1').html(res1);
@@ -74,9 +74,9 @@
 <div>
   Select : 
   <select class='f_elements'>
-    <option name='option' value='option1'>Option 1</option>
-    <option name='option' value='option2'>Option 2</option>
-    <option name='option' value='option3'>Option 3</option>
+    <option id='option1' name='option' value='option1'>Option 1</option>
+    <option id='option2' name='option' value='option2'>Option 2</option>
+    <option id='option3' name='option' value='option3'>Option 3</option>
   </select>
 </div>
 

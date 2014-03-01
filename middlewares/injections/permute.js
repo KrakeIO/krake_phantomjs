@@ -56,8 +56,12 @@ var KrakePermute = {
     parent_value_chain = parent_value_chain || {};
 
     curr_col_els = self.getLevelColumnElements(curr_hdl_index);
-
     curr_el = curr_col_els[curr_hdl_items_index];
+
+    self.logs.push("permutation step: ");
+    self.logs.push("  col_name: " + self.getLevelName(curr_hdl_index));
+    self.logs.push("  current handles column item: " + self.extractDomAttributes(curr_el, self.getLevelAttribute(curr_hdl_index)));
+
     self.makeElementSelected(curr_el, self.getLevelChecksum(curr_hdl_index));
     curr_value_chain = self.getExtendedValueChain(parent_value_chain, curr_el, col_query);
 
@@ -74,8 +78,19 @@ var KrakePermute = {
         self.goWide(curr_hdl_index, curr_hdl_items_index, parent_value_chain, callback);        
       }
       // no more sibiling
-      else 
-        callback && callback();
+      else {
+        self.logs.push("last tree sibilig callback: ");
+        self.logs.push("  col_name: " + self.getLevelName(curr_hdl_index));
+        self.logs.push("  current handles column item: " + self.extractDomAttributes(curr_el, self.getLevelAttribute(curr_hdl_index)));
+        if(callback) {
+          self.logs.push("  has parent callback");
+          callback && callback();
+        } else {
+          self.logs.push("  has no parent callback");
+        }
+
+      }
+        
     }
   },
 
@@ -111,14 +126,43 @@ var KrakePermute = {
   goDeep: function(curr_hdl_index, curr_hdl_items_index, curr_value_chain, parent_value_chain, callback) {
     var self = KrakePermute;    
     self.permuteStep(curr_hdl_index + 1, 0, curr_value_chain, function() {
-      if(curr_hdl_items_index < self.getLevelColumnElements(curr_hdl_index).length - 1)
+
+      self.logs.push("finished sub-tree: ");
+      self.logs.push("  col_name: " + self.getLevelName(curr_hdl_index));
+      self.logs.push("  current handle column item: " + self.extractDomAttributes(
+        self.getLevelColumnElements(curr_hdl_index)[curr_hdl_items_index], 
+        self.getLevelAttribute(curr_hdl_index)
+      ));
+
+      if(curr_hdl_items_index < self.getLevelColumnElements(curr_hdl_index).length - 1) {
         self.goWide(curr_hdl_index, curr_hdl_items_index, parent_value_chain, callback);
+
+      } else {
+        if(callback) {
+          self.logs.push("  no more sibiling");
+          self.logs.push("  has parent callback");
+          callback && callback();
+        } else {
+          self.logs.push("  has no parent callback");
+        }
+      }
+
     });
   },
 
   goWide: function(curr_hdl_index, curr_hdl_items_index, parent_value_chain, callback) {
     var self = KrakePermute;
     self.permuteStep(curr_hdl_index, curr_hdl_items_index + 1, parent_value_chain, callback);
+  },
+
+  getLevelName: function(curr_hdl_index) {
+    var self = KrakePermute;
+    return self.handles[curr_hdl_index]['col_name'] || false;
+  },
+
+  getLevelAttribute: function(curr_hdl_index) {
+    var self = KrakePermute;
+    return self.handles[curr_hdl_index]['required_attribute'];
   },
 
   getLevelChecksum: function(curr_hdl_index) {
@@ -172,8 +216,14 @@ var KrakePermute = {
   },
 
   changeSelectIndex: function(option_node) {
+    var self = KrakePermute;
+    self.logs.push("  selecting option:");
+    self.logs.push("    " + jQuery(option_node).html());
+
     jQuery(option_node).attr("selected", "selected");
-    jQuery('select').has(option_node).trigger('change');
+    var select_parent = jQuery('select').has(option_node)[0];
+    jQuery(select_parent).trigger('change');
+    self.logs.push("    new select value: " + jQuery(select_parent).val());
   }, 
 
   toggleElementActive: function(dom_node, active_class_checksum) {
@@ -182,8 +232,7 @@ var KrakePermute = {
     self.clickElement(dom_node);
     if(active_class_checksum && !(jQuery(dom_node).hasClass(active_class_checksum) || 
       jQuery(dom_node).parent(active_class_checksum).length > 0)) {
-        
-        self.clickElement(dom_node);      
+        self.clickElement(dom_node);
     }
 
   },

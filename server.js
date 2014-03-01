@@ -84,7 +84,9 @@ var service = server.listen(9701, function(req, res) {
       processPage(krakeQueryObject, function(status, results) {
         response.status = status;
         response.message = results;
-        res.write(JSON.stringify(response));
+        response_string = JSON.stringify(response);
+        console.log('[PHANTOM_SERVER] returning response');
+        res.write(response_string);
         res.close();
         console.log("\n\n");
 

@@ -101,10 +101,10 @@ var nextPageClick = function(page, krakeQueryObject, next) {
       }
 
       if(element){
-        logs.push("      click element found");
+        logs.push("  click element found");
         element.dispatchEvent(evt); 
       } else {
-        logs.push("      click element not found");
+        logs.push("  click element not found");
       }
       return logs;
     }, krakeQueryObject);

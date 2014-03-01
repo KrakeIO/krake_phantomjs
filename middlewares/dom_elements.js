@@ -3,12 +3,12 @@ var domElements = function(page, krakeQueryObject, next) {
   
   if(!krakeQueryObject.columns || krakeQueryObject.columns.length == 0) {
     next();
-    return;    
+    return;
   }
 
 	console.log("  Extracting DOM elements:");
   krakeQueryObject.columns.forEach(function(column) {
-    query = column.dom_query || column.xpath
+    query = column.dom_query || column.xpath;
     console.log("      " + column.col_name + " : " + query);
   });
 

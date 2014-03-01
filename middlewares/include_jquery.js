@@ -16,6 +16,8 @@ var includeJquery = function(page, krakeQueryObject, next) {
     !jquery_exist && page.injectJs("./3p/jquery.js") &&
       console.log('    jQuery was injected');
 
+    page.injectJs("./3p/jquery.simulate.js") &&
+      console.log('    jQuery Simulate was injected');
   }    
 
   next();  
