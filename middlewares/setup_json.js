@@ -4,9 +4,9 @@ var setupJsonObject = function(page, krakeQueryObject, next) {
     (typeof JSON != "object") && (JSON = {});
     return typeof JSON.parse == "function"
   }); 
-  console.log('[PHANTOM_SERVER] JSON.parse exist? ' + json_parse_exist);
+  console.log('  JSON.parse exist? ' + json_parse_exist);
   !json_parse_exist && page.injectJs("./3p/json_parse.js") &&
-    console.log('[PHANTOM_SERVER] Setup JSON.parse');
+    console.log('    JSON.parse Setup');
   
   next();
 }

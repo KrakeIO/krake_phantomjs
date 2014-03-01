@@ -36,6 +36,9 @@ app.get '/next_page_ajax', (req, res)->
 app.get '/next_page_ajax_double', (req, res)->
   res.render 'next_page_ajax_double'
 
+app.get '/next_page_non_html', (req, res)->
+  res.render 'next_page_non_html'
+
 app.get '/var_query', (req, res)->
   res.render 'var_query'
 
@@ -53,6 +56,9 @@ app.get '/json-obj', (req, res)->
   res.send { payload: "some text"}
 
 app.get '/timeout', (req, res)->
+
+app.get '/form_simple', (req, res)->
+  res.render 'form_simple'
 
 exports = module.exports = app
 
