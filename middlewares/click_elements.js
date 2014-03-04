@@ -13,7 +13,9 @@ var clickElements = function(page, krakeQueryObject, next) {
 
   }, krakeQueryObject); // eo evaluation  
 
-  next();
+  setTimeout(function() {
+    next();
+  }, 500);
 }
 
 var exports = module.exports = clickElements;
