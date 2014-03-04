@@ -66,9 +66,9 @@ var permute = function(page, krakeQueryObject, next) {
   console.log("    results:");
   console.log("        count:" + combined_results_rows.length);
   combined_results_rows.forEach(function(row) {
-    // console.log("      row:");
+    console.log("      row:");
     Object.keys(row).forEach(function(col_name) {
-      // console.log("        " + col_name + " : " + row[col_name])
+      console.log("        " + col_name + " : " + row[col_name])
     });
   });
 
