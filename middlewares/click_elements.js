@@ -1,16 +1,8 @@
 // Clicks on the elements on the page
 var clickElements = function(page, krakeQueryObject, next) {
 
-  if(!krakeQueryObject.to_click) {
-    next();
-    return;
-  }
-
   //page.render('facebook-phantom.pdf');
-  console.log('  clicking elements on page');
-  krakeQueryObject.to_click.forEach(function(click_el) {
-    console.log("    " + click_el);
-  })
+  console.log('[PHANTOM_SERVER] clicking elements on page');
 
   page.evaluate(function(krakeQueryObject) {
     if(krakeQueryObject && krakeQueryObject.to_click) {
@@ -21,10 +13,7 @@ var clickElements = function(page, krakeQueryObject, next) {
 
   }, krakeQueryObject); // eo evaluation  
 
-  setTimeout(function() {
-    next();
-  }, 500);
-
+  next();
 }
 
 var exports = module.exports = clickElements;
