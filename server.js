@@ -30,16 +30,16 @@ var processPage = function(krakeQueryObject, callback) {
     callback && callback('error', 'origin_url not defined');
     return;
     
-  } else if(!krakeQueryObject.columns) {
+  } else if(!krakeQueryObject.columns && !krakeQueryObject.permuted_columns) {
     console.log('[PHANTOM_SERVER] columns not defined \r\n\t\tURL:' + krakeQueryObject.origin_url);
     callback && callback('error', 'columns not defined');
     return;    
     
   } else {
-    console.log('[PHANTOM_SERVER] Processing page \r\n\t\tURL:' + krakeQueryObject.origin_url);
+    console.log('[PHANTOM_SERVER] Processing page URL:' + krakeQueryObject.origin_url);
     var page = require('webpage').create();
     
-    console.log('[PHANTOM_SERVER] Adding Middle Wares \r\n\t\tURL:' + krakeQueryObject.origin_url);
+    console.log('  Adding Middle Wares');
     kp = new KrakeProcessor();
     kp.use(require('./middlewares/set_headers'));
     kp.use(require('./middlewares/set_cookies'));
@@ -51,7 +51,8 @@ var processPage = function(krakeQueryObject, callback) {
     kp.use(require('./middlewares/waitup'));
     kp.use(require('./middlewares/click_elements'));
     kp.use(require('./middlewares/dom_elements'));
-    kp.use(require('./middlewares/var_query'));    
+    kp.use(require('./middlewares/var_query'));
+    kp.use(require('./middlewares/permute'));
     kp.use(require('./middlewares/next_page_get'));
     kp.use(require('./middlewares/next_page_click'));
     kp.use(require('./middlewares/close_page'));
@@ -83,8 +84,11 @@ var service = server.listen(9701, function(req, res) {
       processPage(krakeQueryObject, function(status, results) {
         response.status = status;
         response.message = results;
-        res.write(JSON.stringify(response));
+        response_string = JSON.stringify(response);
+        console.log('[PHANTOM_SERVER] returning response');
+        res.write(response_string);
         res.close();
+        console.log("\n\n");
 
       });
       

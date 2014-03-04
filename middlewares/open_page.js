@@ -1,5 +1,5 @@
 var openPage = function(page, krakeQueryObject, next) {
-  console.log("[PHANTOM_SERVER] Opening page");
+  console.log("  Opening page");
   // @Description : throws up the error
   page.onError = function (msg, trace) {
     console.log(msg);
@@ -10,11 +10,12 @@ var openPage = function(page, krakeQueryObject, next) {
   
   // the callback that is triggered after the page is open
   callback = function(status) {
+
+    krakeQueryObject.jobResults = { result_rows: [], logs: [] };
     // When opening page failed
   	if(status !== 'success') {
-  	  console.log('[PHANTOM_SERVER] failed to open page.');
+  	  console.log('    failed to open page.');
   	  krakeQueryObject.jobStatus = 'error'
-      krakeQueryObject.jobResults = { result_rows: [] }
       page.close();
   	} 
     next();  	

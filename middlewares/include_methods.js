@@ -1,5 +1,10 @@
 var includeMethods = function(page, krakeQueryObject, next) {
-  page.injectJs("./3p/extract_dom_attributes.js") && console.log('[PHANTOM_SERVER] included extractAttributeFromDom');
+  page.injectJs("./middlewares/injections/dom_elements.js") && 
+    console.log('  included extractAttributeFromDom');
+
+  page.injectJs("./middlewares/injections/permute.js") && 
+    console.log('  included krake_permute object');
+    
   next();
 }
 var exports = module.exports = includeMethods;

@@ -1,6 +1,11 @@
 // @extracts the next page url from the page  
 var nextPageClick = function(page, krakeQueryObject, next) {
 
+  if(!krakeQueryObject.next_page || !krakeQueryObject.next_page) {
+    next();
+    return
+  }
+
   // @Description : extracts value from page
   // @return: 
   //    results:Object
@@ -16,8 +21,10 @@ var nextPageClick = function(page, krakeQueryObject, next) {
   // When is getting the next page url via clicking
   if(krakeQueryObject.next_page && krakeQueryObject.next_page.click) {
 
-    console.log('[PHANTOM_SERVER] extracting Next Page via clicking on the anchor element');
-    page.injectJs("./3p/navigate_away.js") && console.log('[PHANTOM_SERVER] included navigate_away.js');
+    console.log('  Extracting Next Page via clicking');
+    console.log('    actions');    
+    page.injectJs("./middlewares/injections/navigate_away.js") && console.log('      included navigate_away.js');
+
 
     krakeQueryObject.jobResults = krakeQueryObject.jobResults || {};
 
@@ -26,7 +33,7 @@ var nextPageClick = function(page, krakeQueryObject, next) {
     var nav_route = false;
 
     var time_cop = setTimeout(function() {
-      console.log('[PHANTOM_SERVER] Click Next Page Timed out');
+      console.log('     click Next Page Timed out');
       timed_out = true;
       next();
     }, 5000);
@@ -44,11 +51,11 @@ var nextPageClick = function(page, krakeQueryObject, next) {
 
     page.onCallback = function(data) {
       if(data['event'] == 'xml_http_req') {
-        console.log("Catching new ajax away");
+        console.log("      catching new ajax away");
         ajax_route = true;
 
       } else if(data['event'] == 'page_load') {
-        console.log("Catching next navigated away");
+        console.log("      catching next navigated away");
         nav_route = true;
 
       }
@@ -57,7 +64,7 @@ var nextPageClick = function(page, krakeQueryObject, next) {
     page.onResourceReceived = function(responseData) {
       // console.log('[PHANTOM_SERVER] resource request : ' + responseData.url);
       if(!timed_out && ajax_route && responseData.contentType.indexOf("text/html") > -1) {
-        console.log('[PHANTOM_SERVER] Next Page Resource : ' + responseData.url);
+        console.log('    Next Page Resource : ' + responseData.url);
         krakeQueryObject.jobResults.next_page = responseData.url;
         taskComplete();
       }
@@ -66,7 +73,7 @@ var nextPageClick = function(page, krakeQueryObject, next) {
     page.onUrlChanged = function(targetUrl) {
       // console.log('[PHANTOM_SERVER] new url loaded : ' + targetUrl);
       if(!timed_out && nav_route) {
-        console.log('[PHANTOM_SERVER] Next Page URL : ' + targetUrl);
+        console.log('    Next Page URL : ' + targetUrl);
         krakeQueryObject.jobResults.next_page = targetUrl;
         taskComplete();
       }
@@ -94,15 +101,19 @@ var nextPageClick = function(page, krakeQueryObject, next) {
       }
 
       if(element){
-        logs.push("click element found");
+        logs.push("  click element found");
         element.dispatchEvent(evt); 
       } else {
-        logs.push("click element not found");
+        logs.push("  click element not found");
       }
       return logs;
     }, krakeQueryObject);
 
-    console.log("[PHANTOM_SERVER] next page click logs: " + click_logs.join(",\n\r\t"))
+    console.log("    logs");
+    click_logs.forEach(function(log) {
+      console.log("      " + log);
+    })
+
 
     
   // When next_page operator was not specified

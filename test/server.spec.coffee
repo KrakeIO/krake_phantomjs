@@ -291,43 +291,6 @@ describe "testing well formed Krake definition", ()->
       expect(typeof response_obj.message).toBe "object"
       done() 
     
-describe "Facebook fanpage using Cookies", ()->
-  it "should respond with success and an object ", (done)->
-    post_data = KSON.stringify(
-      "render" : true
-      "wait" : 3000
-      "origin_url": "http://www.tripadvisor.com.sg/Attractions-g294265-Activities-Singapore.html"
-      "columns": [{
-        "col_name": "place name"
-        "xpath": "/html[1]/body[1]/div/div[2]/div[2]/div[5]/div[1]/div[1]/div[2]/div[1]/div/div[2]/a[1]"
-      },{
-        "xpath": "/html[1]/body[1]/div/div[2]/div[2]/div[5]/div[1]/div[1]/div[2]/div[1]/div/div[2]/a[1]"
-        "col_name": "place name_link"
-        "required_attribute": "href"
-        "options": 
-            "columns": [{
-              "col_name": "address"
-              "xpath": "/html[1]/body[1]/div/div[2]/div[2]/div[1]/div[4]/div[1]/div[2]/div[2]/address[1]"
-            },{
-              "col_name": "phone"
-              "xpath": "/html[1]/body[1]/div/div[2]/div[2]/div[1]/div[4]/div[1]/div[2]/div[2]/div[1]/div[1]/div[2]"
-            },{
-              "col_name": "number of reviews"
-              "xpath": "/html[1]/body[1]/div/div[2]/div[2]/div[1]/div[4]/div[1]/div[4]/div[1]/h3[1]"
-            },{
-              "col_name": "attraction ranking"
-              "xpath": "/html[1]/body[1]/div/div[2]/div[2]/div[1]/div[4]/div[1]/div[3]/div[1]/div[2]/div[1]/span[1]/div[1]/b[1]/span[1]"
-            }]
-      }]
-    )
-
-    testClient post_data, (response_obj)-> 
-      expect(response_obj.status).toEqual "success"
-      expect(typeof response_obj.message).toBe "object"
-      expect(typeof response_obj.message.result_rows[0]).toBe "object"
-      response_obj.message.result_rows[0] && expect(response_obj.message.result_rows[0]['place name']).toBe "Food Playground"
-      done() 
-    
 describe "Test to ensure extreme long JSON query gets handled properly", ()->
   it "should respond with success and an object ", (done)->
     post_data =
