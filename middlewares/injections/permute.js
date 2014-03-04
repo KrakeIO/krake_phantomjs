@@ -229,7 +229,7 @@ var KrakePermute = {
         break;
 
       default :
-        self.clickElement(dom_node, class_checksum);
+        self.toggleClickableElementActive(dom_node, class_checksum);
         break;
 
     }
@@ -246,12 +246,14 @@ var KrakePermute = {
     self.logs.push("    new select value: " + jQuery(select_parent).val());
   }, 
 
-  toggleElementActive: function(dom_node, active_class_checksum) {
+  toggleClickableElementActive: function(dom_node, active_class_checksum) {
     var self = KrakePermute;
 
     self.clickElement(dom_node);
-    if(active_class_checksum && !(jQuery(dom_node).hasClass(active_class_checksum) || 
-      jQuery(dom_node).parent(active_class_checksum).length > 0)) {
+    if(active_class_checksum && !(
+        jQuery(dom_node).hasClass(active_class_checksum) || 
+        jQuery(dom_node).parent(active_class_checksum).length > 0
+      )) {
         self.clickElement(dom_node);
     }
 

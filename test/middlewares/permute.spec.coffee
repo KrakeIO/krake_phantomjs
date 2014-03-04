@@ -397,3 +397,11 @@ describe "permutate", ->
       expect(response_obj.message.result_rows.length).toEqual 9
       expect(typeof response_obj.message.result_rows[0]['response1']).toEqual "string"
       done()
+
+  it "should toggle element to active if checksum is provided"
+  # it "should return taobao stock levels", (done)->
+  #   krake_definition = require '../fixtures/json/taobao'
+  #   testClient KSON.stringify(krake_definition), (response_obj)-> 
+  #     expect(response_obj.message.result_rows.length).toEqual 20
+  #     expect(typeof response_obj.message.result_rows[0]['stock']).toEqual "string"
+  #     done()    
