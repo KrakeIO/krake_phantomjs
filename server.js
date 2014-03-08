@@ -44,6 +44,7 @@ var processPage = function(krakeQueryObject, callback) {
     kp.use(require('./middlewares/set_headers'));
     kp.use(require('./middlewares/set_cookies'));
     kp.use(require('./middlewares/open_page'));
+    kp.use(require('./middlewares/get_cookies'));    
     kp.use(require('./middlewares/render_page'));
     kp.use(require('./middlewares/include_methods'));
     kp.use(require('./middlewares/setup_json'));

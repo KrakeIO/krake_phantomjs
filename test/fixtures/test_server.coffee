@@ -48,9 +48,13 @@ app.get '/success_delayed', (req, res)->
   , 500
 
 app.post '/open_post_page', (req, res)->
-  pageBody = '<html><body><div id="value1">' + req.body.param1 + '</div>' +
-    '<div id="value2">' + req.body.param2 + '</div></body></html>'
-  res.send pageBody
+  res.render 'post_method',
+    param1: req.body.param1
+    param2: req.body.param2
+
+app.get '/open_cookie_jar', (req, res)->
+  res.cookie 'my_cookie', 'my_cookie_value'
+  res.render 'open_cookie_jar'
 
 app.get '/json-obj', (req, res)->
   res.send { payload: "some text"}
