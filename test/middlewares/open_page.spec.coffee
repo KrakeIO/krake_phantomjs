@@ -9,12 +9,12 @@ describe "open_page", ()->
   
   afterEach ()=>
     app.close()
-      
-  it "should respond with success as well as cookie received", (done)->
+  
+  it "should open page with POST method when method is defined", (done)->
 
     post_data = KSON.stringify(
       "origin_url": "http://localhost:9999/open_post_page"
-      "method" : "post"      
+      "method" : "post"
       "columns": [{
         "col_name": "res1"
         "dom_query": "#value1"
@@ -34,6 +34,4 @@ describe "open_page", ()->
       expect(typeof response_obj.message.result_rows[0]).toBe "object"
       expect(response_obj.message.result_rows[0]['res1']).toEqual "hello"
       expect(response_obj.message.result_rows[0]['res2']).toEqual "world"
-      done() 
-
-
+      done()
