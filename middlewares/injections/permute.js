@@ -261,17 +261,7 @@ var KrakePermute = {
 
   clickElement: function(dom_node) {
     jQuery(dom_node).simulate('click');
-    
-  }  
+  }
 }
 
-// Attempted export of KSON library. Will work only in NODEJS
-try {
-  // Export KSON object only if the module
-  module && (module.exports = KrakePermute);
-    
-} catch(e){
-  // Suppressed error message to prevent error in non-webkit browsers
-  // console.log('KSON library loaded on client side. KSON not exported');
-  
-}
+try { module && (module.exports = KrakePermute); } catch(e){}

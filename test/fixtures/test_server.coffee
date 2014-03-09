@@ -12,6 +12,9 @@ app.configure ()->
 app.post '/', (req, res)->
   res.render 'post_method', { param1: req.body.param1, param2: req.body.param2}
 
+app.get '/', (req, res)->
+  res.render 'post_method', { param1: req.query.param1, param2: req.query.param2}  
+
 app.post '/success', (req, res)->
   res.render 'success'
 
@@ -63,6 +66,9 @@ app.get '/timeout', (req, res)->
 
 app.get '/form_simple', (req, res)->
   res.render 'form_simple'
+
+app.get '/to_click', (req, res)->
+  res.render 'to_click'
 
 exports = module.exports = app
 

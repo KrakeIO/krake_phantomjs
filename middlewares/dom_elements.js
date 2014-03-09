@@ -33,102 +33,24 @@ var domElements = function(page, krakeQueryObject, next) {
     for(var x = 0; x < krakeQueryObject.columns.length ; x++) {
       
       var curr_column = krakeQueryObject.columns[x];
+      var harvested_values = KrakeDomElements.getDomNodesValues(curr_column);
       
-      // when jQuery selector is to be used        
-      if( (typeof jQuery == "function") && curr_column.dom_query) {
-        results.logs.push("[PHANTOM_SERVER] extract using jQuery" + 
-          "\r\n\t\tcol_name:" + curr_column.col_name +
-          "\r\n\t\tdom_query:" + curr_column.dom_query);
-        
-        // Fetches the results into rows
-        if(!curr_column.is_compound) {
-          var jquery_results = jQuery(curr_column.dom_query);
-          for (var y = 0; y < jquery_results.length ; y++ ) {
-            var curr_result_row = results.result_rows[y] || {};
-            curr_result_row[curr_column['col_name']] = KrakeDomElements.extractDomAttributes(jquery_results[y], curr_column['required_attribute']);
-            results.result_rows[y] = curr_result_row;
-          }
-        
-        // Joins all the values into a single row
-        } else {
-          var jquery_results = [];
-          jQuery(curr_column.dom_query).map(function(index, item) {
-            jquery_results.push(KrakeDomElements.extractDomAttributes(item, curr_column['required_attribute']));
-          });
-          var curr_result_row = results.result_rows[0] || {};
-          curr_result_row[curr_column['col_name']] = jquery_results.join();
-          results.result_rows[0] = curr_result_row;
-          
+      // Fetches the results into rows
+      if(!curr_column.is_compound) {
+        for (var y = 0; y < harvested_values.length ; y++ ) {
+          var curr_result_row = results.result_rows[y] || {};
+          curr_result_row[curr_column['col_name']] = harvested_values[y];
+          results.result_rows[y] = curr_result_row;
         }
       
-      // when jQuery has been explicitly excluded
-      } else if( (typeof jQuery != "function") && curr_column.dom_query) {
-        results.logs.push("[PHANTOM_SERVER] extract using CSS Selector" + 
-          "\r\n\t\tcol_name:" + curr_column.col_name +
-          "\r\n\t\tdom_query:" + curr_column.dom_query);
-          
-        // Fetches the results into rows
-        if(!curr_column.is_compound) {
-          var query_results = document.querySelectorAll(curr_column.dom_query);
-          for (var y = 0; y < query_results.length ; y++ ) {
-            var curr_result_row = results.result_rows[y] || {};
-            curr_result_row[curr_column['col_name']] = KrakeDomElements.extractDomAttributes(query_results[y], curr_column['required_attribute']);
-            results.result_rows[y] = curr_result_row;
-          }
-        
-        // Joins all the values into a single row
-        } else {
-          var query_results = document.querySelectorAll(curr_column.dom_query);
-          var final_results = [];
-          for (var y = 0; y < query_results.length ; y++ ) {
-            final_results.push(KrakeDomElements.extractDomAttributes(query_results[y], curr_column['required_attribute']));
-          }
-          var curr_result_row = results.result_rows[0] || {};
-          curr_result_row[curr_column['col_name']] = final_results.join();
-          results.result_rows[0] = curr_result_row;
-                  
-        }
-
-      // when xpath is to be used
-      } else if(curr_column.xpath) {
-
-        results.logs.push("[PHANTOM_SERVER] extract using Xpath" + 
-          "\r\n\t\tcol_name:" + curr_column.col_name +
-          "\r\n\t\tdom_query:" + curr_column.xpath );
-
-        var xPathResults = document.evaluate(curr_column.xpath, document);  
-        var curr_item;
-        var y = 0;
-        
-        // Fetches the results into rows
-        if(!curr_column.is_compound) {
-          while(curr_item = xPathResults.iterateNext()) {
-            var curr_result_row = results.result_rows[y] || {}; 
-            curr_result_row[ curr_column['col_name'] ] = KrakeDomElements.extractDomAttributes(curr_item, curr_column['required_attribute']);
-            results.result_rows[y] = curr_result_row;
-            y++;
-          }
-        
-        // Joins all the values into a single row
-        } else {
-          var final_results = [];
-          while(curr_item = xPathResults.iterateNext()) {
-            final_results.push(KrakeDomElements.extractDomAttributes(curr_item, curr_column['required_attribute']));
-          }
-          var curr_result_row = results.result_rows[0] || {};
-          curr_result_row[curr_column['col_name']] = final_results.join();
-          results.result_rows[0] = curr_result_row;  
-          
-        }
-        
-      // when both xpath and dom_query are missing
+      // Joins all the values into a single row
       } else {
-        results.logs.push("[PHANTOM_SERVER] dom selector is missing" + 
-          "\r\n\t\col_name:" + curr_column['col_name']);
+        var curr_result_row = results.result_rows[0] || {};
+        curr_result_row[curr_column['col_name']] = harvested_values.join();
+        results.result_rows[0] = curr_result_row;
         
       }
 
-      
     } // eo iterating through krake columns
     
     return results;
