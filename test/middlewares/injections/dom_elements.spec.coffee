@@ -11,8 +11,9 @@ describe "KrakeDomElements", ->
       col_obj = 
         col_name: "my col"
         dom_query: ".some-col"
-        to_click:
+        simulate:
           dom_query: ".some-col"
+          action: "click"
 
       @kde.getDomNodesValues col_obj
       expect(@kde.toClick).toHaveBeenCalled()

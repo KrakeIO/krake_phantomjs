@@ -16,8 +16,9 @@ describe "domElements", ()->
       columns: [{
           col_name: "what is on your mind",
           dom_query: "#my_changing_mind"
-          to_click:
-            dom_query: "#my_changing_mind"
+          simulate:
+            dom_query: "#my_changing_mind",
+            action: "click"
       }]
     )
 

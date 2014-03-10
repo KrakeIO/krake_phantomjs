@@ -35,8 +35,8 @@ var KrakeDomElements = {
   getDomNodesValues : function(curr_column) {
     var self = this;
 
-    if(curr_column.to_click) {
-      self.toClick(curr_column.to_click);
+    if(curr_column.simulate) {
+      self.toClick(curr_column.simulate);
     }
 
     dom_elements = self.getDomNodes(curr_column);
@@ -73,11 +73,11 @@ var KrakeDomElements = {
   },
 
   // Clicks on dom elements defined in the to_click object
-  toClick : function(to_click) {
+  toClick : function(simulate) {
     var self = this;
-    dom_elements = self.getDomNodes(to_click);
+    dom_elements = self.getDomNodes(simulate);
     dom_elements.forEach(function(dom_node) {
-      jQuery(dom_node).simulate('click');
+      jQuery(dom_node).simulate(simulate.action);
     });
   }
 
