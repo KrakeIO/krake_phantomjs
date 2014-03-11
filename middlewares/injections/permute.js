@@ -42,10 +42,11 @@ var KrakePermute = {
     self.logs = [];
   },
 
-  permute : function(){
+  permute : function(callback){
     var self = KrakePermute;    
     self.permuteStep(0, 0, {}, function(){
       self.logs.push("all permutations has been completed");
+      callback && callback();
     });
   },
 

@@ -1,0 +1,11 @@
+<script>
+  jQuery(document).ready(function(){
+    jQuery("#my_changing_mind").mouseover(function(){
+      console.log("I mousedover slowly");
+      setTimeout(function(){
+        jQuery("#my_changing_mind").html("My mind has been glossed over slowly");
+      }, 100);
+    });
+  });
+</script>
+<div id="my_changing_mind">Still glossing over</div>
