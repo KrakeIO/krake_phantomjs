@@ -86,7 +86,7 @@ var service = server.listen(9701, function(req, res) {
         response.status = status;
         response.message = results;
         response_string = JSON.stringify(response);
-        console.log('[PHANTOM_SERVER] returning response');
+        console.log('  Returning response');
         res.write(response_string);
         res.close();
         console.log("\n\n");

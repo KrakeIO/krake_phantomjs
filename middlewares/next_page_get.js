@@ -28,7 +28,7 @@ var nextPageGet = function(page, krakeQueryObject, next) {
     
     // gets the next page hyperlink if it exist and use Xpath
     if(krakeQueryObject.next_page && krakeQueryObject.next_page.xpath) { 
-      results.logs.push("[PHANTOM_SERVER] extracting next page using Xpath" + 
+      results.logs.push("  Extracting next page using Xpath" + 
           "\r\n\t\txpath : " + krakeQueryObject.next_page.xpath);
       var xPathResults = document.evaluate(krakeQueryObject.next_page.xpath, document);
       var xpath_np;
@@ -38,14 +38,14 @@ var nextPageGet = function(page, krakeQueryObject, next) {
     
     // when jQuery selector is to be used             
     } else if( (typeof jQuery == "function") && krakeQueryObject.next_page && krakeQueryObject.next_page.dom_query) {
-      results.logs.push("[PHANTOM_SERVER] extracting next page using jQuery" + 
+      results.logs.push("  Extracting next page using jQuery" + 
           "\r\n\t\tdom_query : " + krakeQueryObject.next_page.dom_query);
       var jquery_np = jQuery(krakeQueryObject.next_page.dom_query);
       jquery_np.length && ( results.next_page = KrakeDomElements.extractDomAttributes(jquery_np[0], 'href') );
       
     // when jQuery has been explicitly excluded
     } else if(  (typeof jQuery != "function") && krakeQueryObject.next_page && krakeQueryObject.next_page.dom_query) {
-      results.logs.push("[PHANTOM_SERVER] extracting next page using querySelectorAll" + 
+      results.logs.push("  Extracting next page using querySelectorAll" + 
           "\r\n\t\tdom_query : " + krakeQueryObject.next_page.dom_query);
       var jquery_np = document.querySelectorAll(krakeQueryObject.next_page.dom_query);
       jquery_np.length && ( results.next_page = KrakeDomElements.extractDomAttributes(jquery_np[0], 'href' ) );

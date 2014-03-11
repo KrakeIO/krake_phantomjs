@@ -50,6 +50,7 @@ var nextPageClick = function(page, krakeQueryObject, next) {
     }
 
     page.onCallback = function(data) {
+      console.log("      page callback event");
       if(data['event'] == 'xml_http_req') {
         console.log("      catching new ajax away");
         ajax_route = true;

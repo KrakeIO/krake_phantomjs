@@ -70,6 +70,12 @@ app.get '/form_simple', (req, res)->
 app.get '/to_click', (req, res)->
   res.render 'to_click'
 
+app.get '/to_mouseover', (req, res)->
+  res.render 'to_mouseover'  
+
+app.get '/to_mouseover_slowly', (req, res)->
+  res.render 'to_mouseover_slowly'
+
 exports = module.exports = app
 
 if !module.parent
