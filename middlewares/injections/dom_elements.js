@@ -58,14 +58,14 @@ var KrakeDomElements = {
       self.toSimulate(curr_column.simulate);
     }
 
-    if(curr_column.wait) {
+    if(curr_column.simulate && curr_column.simulate.wait) {
       self.results.logs.push("waiting for " + curr_column.wait + " milliseconds after simulation");
       setTimeout(function() {
         var dnv_rs = self.getDomNodes(curr_column).map(function(item) {
           return self.extractDomAttributes(item, curr_column['required_attribute']);
         });
         callback && callback(dnv_rs);
-      }, curr_column.wait);
+      }, curr_column.simulate.wait);
 
     } else {
       var dnv_rs = self.getDomNodes(curr_column).map(function(item) {

@@ -54,8 +54,8 @@ describe "domElements", ()->
       columns: [{
           col_name: "what is on your mind"
           dom_query: "#my_changing_mind"
-          wait: 120
           simulate:
+            wait: 120            
             dom_query: "#my_changing_mind"
             action: "mouseover"
       }]
