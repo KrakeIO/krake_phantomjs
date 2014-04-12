@@ -55,6 +55,7 @@ var KrakeDomElements = {
     var self = this;
 
     if(curr_column.simulate) {
+      self.results.logs.push("simulation for " + curr_column.col_name);
       self.toSimulate(curr_column.simulate);
     }
 
