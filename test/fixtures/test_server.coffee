@@ -76,6 +76,9 @@ app.get '/to_mouseover', (req, res)->
 app.get '/to_mouseover_slowly', (req, res)->
   res.render 'to_mouseover_slowly'
 
+app.get '/sudden_death', (req, res)->
+  res.render 'sudden_death'
+
 exports = module.exports = app
 
 if !module.parent

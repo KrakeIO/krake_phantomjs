@@ -8,5 +8,5 @@ describe "set_headers", ()->
       origin_url : "https://www.google.com/#q=what+to+do"
       
     setHeader page, krakeQueryObject, ()->
-      expect(page.settings['userAgent']).toEqual 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.89 Safari/537.1'
+      expect(page.settings['userAgent']).toEqual 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36'
       done()

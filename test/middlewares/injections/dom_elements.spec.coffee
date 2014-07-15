@@ -1,6 +1,18 @@
 describe "KrakeDomElements", ->
   beforeEach ->
     @kde = require '../../../middlewares/injections/dom_elements'
+    @kde.init 
+      "origin_url": "http://localhost:9999/open_post_page"
+      "columns": [{
+        "col_name": "col1"
+        "dom_query": "#fun"
+      },{
+        "col_name": "col2"
+        "dom_query": "#not-fun"
+      }],
+      "sudden_death": {
+        "dom_query": "#captcha"
+      }    
 
   describe "getDomNodesValues", ->
     beforeEach ->
