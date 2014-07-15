@@ -56,6 +56,7 @@ var processPage = function(krakeQueryObject, callback) {
     kp.use(require('./middlewares/permute'));
     kp.use(require('./middlewares/next_page_get'));
     kp.use(require('./middlewares/next_page_click'));
+    kp.use(require('./middlewares/sudden_death'));
     kp.use(require('./middlewares/close_page'));
     kp.process(page, krakeQueryObject, function(status, results) {
       callback && callback(status, results);

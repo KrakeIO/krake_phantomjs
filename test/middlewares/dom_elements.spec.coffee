@@ -86,3 +86,19 @@ describe "domElements", ()->
       expect(typeof response_obj.message.result_rows).toBe "object"
       expect(response_obj.message.result_rows[0]["what is on your mind"]).toEqual "Still glossing over"
       done()
+
+  it "should return empty result_rows even if no results were harvested", (done)->
+    post_data = KSON.stringify(
+      origin_url : "http://localhost:9999/sudden_death",
+      columns: [{
+          col_name: "what is on your mind"
+          dom_query: "#my_changing_mind"
+      }]
+    )
+
+    testClient post_data, (response_obj)-> 
+      expect(response_obj.status).toEqual "success"
+      expect(typeof response_obj.message).toBe "object"
+      expect(typeof response_obj.message.result_rows).toBe "object"
+      expect(response_obj.message.result_rows.length).toEqual 0
+      done()
