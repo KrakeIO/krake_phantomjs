@@ -1,12 +1,26 @@
-// Overriding the XMLHttpRequest prototype
+// Hijacking the XMLHttpRequest prototype
 XMLHttpRequest.prototype._open = XMLHttpRequest.prototype.open
 XMLHttpRequest.prototype.open = function() { console.log(arguments)
-  console.log(arguments[0])
   XMLHttpRequest.prototype._open.apply(this, arguments)
-  window.callPhantom({ event: "xml_http_req", method: arguments[0], url: arguments[1] });
+  window.callPhantom({ event: "xml_http_req", method: arguments[0], url: arguments[1], args: arguments });
 };
 
-// Handlings the page unload event
+// Listening in on the page unload event
 window.addEventListener('pagehide', function() {
   window.callPhantom({ event: "page_load" });
 }, false);
+
+// Hijacking all form submits on the page
+for(var x = 0; x < window.document.forms.length; x++) {
+  var curr_form = window.document.forms[x];
+  curr_form._submit = curr_form.submit
+  curr_form.submit = function() {
+    var self = this;
+    var post_data = {};
+    $(self).serializeArray().forEach( function(form_input_obj) {
+      post_data[form_input_obj.name] = form_input_obj.value
+    });
+
+    window.callPhantom({ event: "form_post", post_data: post_data, url: self.action });
+  }
+}
