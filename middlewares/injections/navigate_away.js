@@ -21,6 +21,6 @@ for(var x = 0; x < window.document.forms.length; x++) {
       form_data[form_input_obj.name] = form_input_obj.value
     });
 
-    window.callPhantom({ event: "form_post", url: self.action, method: self.method, form_data: form_data  });
+    window.callPhantom({ event: "form_post", url: self.action, method: self.method.toLowerCase(), form_data: form_data  });
   }
 }
