@@ -30,6 +30,12 @@ app.get '/next_page_get', (req, res)->
 app.get '/next_page_post', (req, res)->
   res.render 'next_page_post'
 
+app.get '/next_page_get_form', (req, res)->
+  res.render 'next_page_get_form'  
+
+app.get '/next_page_post_form', (req, res)->
+  res.render 'next_page_post_form'  
+
 app.get '/next_page_empty', (req, res)->
   res.render 'next_page_empty'
 

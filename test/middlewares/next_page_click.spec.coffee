@@ -32,7 +32,52 @@ describe "Next page click", ()->
       expect(response_obj.status).toEqual "success"
       expect(typeof response_obj.message).toEqual "object"
       expect(typeof response_obj.message.next_page).toEqual "string"
-      expect(response_obj.message.next_page).toEqual "http://localhost:9999/success?"
+      expect(response_obj.message.next_page).toEqual "http://localhost:9999/success"
+      expect(typeof response_obj.message.form).toEqual "object"
+      done()
+
+  it "should return next page HTTP POST url and all form data through click", (done)->
+    post_data = KSON.stringify(
+      "origin_url" : "http://localhost:9999/next_page_post_form"
+      "columns": [{
+        "col_name": "col 1",
+        "dom_query": "#col1"
+      }],
+      "next_page" :
+        "dom_query" : '#next_page'
+        "click" : true
+    )
+    
+    testClient post_data, (response_obj)-> 
+      expect(response_obj.status).toEqual "success"
+      expect(typeof response_obj.message).toEqual "object"
+      expect(typeof response_obj.message.next_page).toEqual "string"
+      expect(response_obj.message.next_page).toEqual "http://localhost:9999/success"
+      expect(typeof response_obj.message.form).toEqual "object"
+      expect(response_obj.message.form.data["my_val"]).toEqual "what to do"
+      expect(response_obj.message.form.method).toEqual "post"
+      done()
+
+  it "should return next page HTTP GET url and all form data through click", (done)->
+    post_data = KSON.stringify(
+      "origin_url" : "http://localhost:9999/next_page_get_form"
+      "columns": [{
+        "col_name": "col 1",
+        "dom_query": "#col1"
+      }],
+      "next_page" :
+        "dom_query" : '#next_page'
+        "click" : true
+    )
+    
+    testClient post_data, (response_obj)-> 
+      expect(response_obj.status).toEqual "success"
+      expect(typeof response_obj.message).toEqual "object"
+      expect(typeof response_obj.message.next_page).toEqual "string"
+      expect(response_obj.message.next_page).toEqual "http://localhost:9999/success"
+      expect(typeof response_obj.message.form).toEqual "object"
+      expect(response_obj.message.form.data["my_val"]).toEqual "get what I want"
+      expect(response_obj.message.form.method).toEqual "get"
       done()
 
   it "should return next page HTTP GET url through click", (done)->

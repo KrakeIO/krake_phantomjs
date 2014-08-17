@@ -40,8 +40,9 @@ var nextPageClick = function(page, krakeQueryObject, next) {
 
     var taskComplete = function() {
 
-      page.onResourceRequested = false;
-      page.onUrlChanged = false;
+      page.onResourceRequested  = false;
+      page.onUrlChanged         = false;
+      page.onCallback           = false;
       timed_out = true;        
       
       clearTimeout(time_cop)
@@ -56,8 +57,17 @@ var nextPageClick = function(page, krakeQueryObject, next) {
         ajax_route = true;
 
       } else if(data['event'] == 'page_load') {
-        console.log("      catching next navigated away");
+        console.log("      catching next page HTTP GET");
         nav_route = true;
+
+      } else if(data['event'] == 'form_post') {
+        console.log("      catching next page HTTP POST");
+        krakeQueryObject.jobResults.next_page = data.url;
+        krakeQueryObject.jobResults.form = {
+          method: data.method,
+          data: data.form_data
+        }
+        taskComplete();
 
       }
     };

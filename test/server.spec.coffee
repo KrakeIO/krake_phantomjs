@@ -31,11 +31,9 @@ describe "testing bad page on lelong.com.my", ()->
     )
 
     testClient post_data, (response_obj)-> 
-      expect(response_obj.status).toEqual "success"
+      expect(response_obj.status).toEqual "error"
       expect(typeof response_obj.message).toBe "object"
       expect(typeof response_obj.message.result_rows).toBe "object"
-      expect(typeof response_obj.message.result_rows[0]).toBe "object"
-      expect(response_obj.message.result_rows[0]['email address']).toEqual "mailto:coconutisland@hotmail.my"
       done() 
 
 describe "phantom server cookie testing", ()->
@@ -148,8 +146,8 @@ describe "test extraction of Geolocation from Google", ()->
       expect(typeof response_obj.message).toBe "object"
       expect(typeof response_obj.message.result_rows).toBe "object"
       expect(typeof response_obj.message.result_rows[0]).toBe "object"
-      expect(response_obj.message.result_rows[0].Latitude).toEqual "1.2824106"
-      expect(response_obj.message.result_rows[0].Longitude).toEqual "103.8465200"
+      expect(typeof response_obj.message.result_rows[0].Latitude).toEqual "string"
+      expect(typeof response_obj.message.result_rows[0].Longitude).toEqual "string"
       expect(response_obj.message.result_rows[0]['Postal Code']).toEqual "Singapore"
       done() 
 
