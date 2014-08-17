@@ -28,9 +28,10 @@ var nextPageClick = function(page, krakeQueryObject, next) {
 
     krakeQueryObject.jobResults = krakeQueryObject.jobResults || {};
 
-    var timed_out = false;
-    var ajax_route = false;
-    var nav_route = false;
+    var timed_out   = false;
+    var ajax_route  = false;
+    var nav_route   = false;
+    var form_route  = false;
 
     var time_cop = setTimeout(function() {
       console.log('     click Next Page Timed out');
@@ -67,7 +68,7 @@ var nextPageClick = function(page, krakeQueryObject, next) {
           method: data.method,
           data: data.form_data
         }
-        taskComplete();
+        form_route  = true;
 
       }
     };
@@ -83,7 +84,11 @@ var nextPageClick = function(page, krakeQueryObject, next) {
 
     page.onUrlChanged = function(targetUrl) {
       // console.log('[PHANTOM_SERVER] new url loaded : ' + targetUrl);
-      if(!timed_out && nav_route) {
+      if(!timed_out && form_route) {
+        console.log('    Next Page URL : ' + krakeQueryObject.jobResults.next_page);
+        taskComplete();
+
+      } else if(!timed_out && nav_route) {
         console.log('    Next Page URL : ' + targetUrl);
         krakeQueryObject.jobResults.next_page = targetUrl;
         taskComplete();
