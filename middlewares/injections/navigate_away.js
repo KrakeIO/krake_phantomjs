@@ -16,11 +16,11 @@ for(var x = 0; x < window.document.forms.length; x++) {
   curr_form._submit = curr_form.submit
   curr_form.submit = function() {
     var self = this;
-    var post_data = {};
+    var form_data = {};
     $(self).serializeArray().forEach( function(form_input_obj) {
-      post_data[form_input_obj.name] = form_input_obj.value
+      form_data[form_input_obj.name] = form_input_obj.value
     });
 
-    window.callPhantom({ event: "form_post", post_data: post_data, url: self.action });
+    window.callPhantom({ event: "form_post", url: self.action, method: self.method, form_data: form_data  });
   }
 }

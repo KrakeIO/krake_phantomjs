@@ -62,8 +62,11 @@ var nextPageClick = function(page, krakeQueryObject, next) {
 
       } else if(data['event'] == 'form_post') {
         console.log("      catching next page HTTP POST");
-        krakeQueryObject.jobResults.next_page           = data.url;
-        krakeQueryObject.jobResults.next_page_post_data = data.post_data;
+        krakeQueryObject.jobResults.next_page = data.url;
+        krakeQueryObject.jobResults.form = {
+          method: data.method,
+          data: data.form_data
+        }
         taskComplete();
 
       }
