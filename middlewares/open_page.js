@@ -23,8 +23,11 @@ var openPage = function(page, krakeQueryObject, next) {
   
   // POST method
   if(krakeQueryObject.method && krakeQueryObject.method == 'post') {
+      console.log("    method: POST");
       postData = krakeQueryObject.post_data || []
+      console.log("    form:");
       queryString = Object.keys(krakeQueryObject.post_data).map(function(key){ 
+      console.log("     " + key + ": " + krakeQueryObject.post_data[key]);
         return key + "=" + krakeQueryObject.post_data[key]
       }).join("&");
       page.open(krakeQueryObject.origin_url, 'post', queryString, callback);        
