@@ -1,7 +1,7 @@
 // @extracts the next page url from the page  
 var nextPageClick = function(page, krakeQueryObject, next) {
 
-  if(!krakeQueryObject.next_page || !krakeQueryObject.next_page) {
+  if(!krakeQueryObject.next_page) {
     next();
     return
   }

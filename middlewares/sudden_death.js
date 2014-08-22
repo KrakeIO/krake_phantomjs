@@ -1,4 +1,10 @@
 var suddenDeath = function(page, krakeQueryObject, next) {
+
+  if(!krakeQueryObject.sudden_death) {
+    next();
+    return
+  }
+
   console.log('  checking for sudden death elements on page');
   results = page.evaluate(function(krakeQueryObject) {
     var results = krakeQueryObject.jobResults || {};
