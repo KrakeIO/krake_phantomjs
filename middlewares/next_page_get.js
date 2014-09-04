@@ -58,6 +58,7 @@ var nextPageGet = function(page, krakeQueryObject, next) {
 
   console.log("    results:");
   console.log("      " + results.next_page);
+  results.next_page_method    = "get";  
   krakeQueryObject.jobResults = results
   next();
 }

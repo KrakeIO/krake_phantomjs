@@ -55,8 +55,9 @@ describe "Next page get", ()->
     
     testClient post_data, (response_obj)-> 
       expect(response_obj.status).toEqual "success"
-      expect(typeof response_obj.message).toEqual "object"
+      expect(typeof response_obj.message).toEqual "object"      
       expect(typeof response_obj.message.next_page).toEqual "string"
+      expect(response_obj.message.next_page_method).toEqual "get"      
       expect(response_obj.message.next_page).toEqual "http://localhost:9999/success"
       done() 
     
@@ -75,5 +76,6 @@ describe "Next page get", ()->
       expect(response_obj.status).toEqual "success"
       expect(typeof response_obj.message).toEqual "object"
       expect(typeof response_obj.message.next_page).toEqual "string"
+      expect(response_obj.message.next_page_method).toEqual "get"      
       expect(response_obj.message.next_page).toEqual "http://localhost:9999/success"
       done() 
