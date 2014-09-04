@@ -61,9 +61,16 @@ var nextPageClick = function(page, krakeQueryObject, next) {
         nav_route = true;
 
       } else if(data['event'] == 'form_post') {
-        console.log("      catching next page HTTP POST");
+        console.log("      catching next page Form Post");
+        console.log("        method: " + data.method);
+        console.log("        form attributes: ");
+        Object.keys(data.post_data).forEach(function(key) {
+          console.log("          " + key + ": " + data.post_data[key]);
+        });
+
         krakeQueryObject.jobResults.next_page           = data.url;
         krakeQueryObject.jobResults.next_page_post_data = data.post_data;
+        krakeQueryObject.jobResults.next_page_method    = data.method;
         taskComplete();
 
       }

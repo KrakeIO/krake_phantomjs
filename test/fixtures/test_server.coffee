@@ -30,9 +30,12 @@ app.get '/next_page_get', (req, res)->
 app.get '/next_page_post', (req, res)->
   res.render 'next_page_post'
 
-app.get '/next_page_post_form', (req, res)->
-  res.render 'next_page_post_form'  
+app.get '/next_page_form_http_post', (req, res)->
+  res.render 'next_page_form_http_post'  
 
+app.get '/next_page_form_http_get', (req, res)->
+  res.render 'next_page_form_http_get'  
+  
 app.get '/next_page_empty', (req, res)->
   res.render 'next_page_empty'
 
@@ -80,7 +83,7 @@ app.get '/to_mouseover_slowly', (req, res)->
   res.render 'to_mouseover_slowly'
 
 app.get '/sudden_death', (req, res)->
-  res.render 'sudden_death'
+  res.render 'sudden_death'  
 
 exports = module.exports = app
 

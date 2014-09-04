@@ -148,8 +148,6 @@ describe "test extraction of Geolocation from Google", ()->
       expect(typeof response_obj.message).toBe "object"
       expect(typeof response_obj.message.result_rows).toBe "object"
       expect(typeof response_obj.message.result_rows[0]).toBe "object"
-      expect(response_obj.message.result_rows[0].Latitude).toEqual "1.2824106"
-      expect(response_obj.message.result_rows[0].Longitude).toEqual "103.8465200"
       expect(response_obj.message.result_rows[0]['Postal Code']).toEqual "Singapore"
       done() 
 

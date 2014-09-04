@@ -35,10 +35,9 @@ describe "Next page click", ()->
       expect(response_obj.message.next_page).toEqual "http://localhost:9999/success"
       done()
 
-      
   it "should return next page HTTP POST url and all form Data through click", (done)->
     post_data = KSON.stringify(
-      "origin_url" : "http://localhost:9999/next_page_post_form"
+      "origin_url" : "http://localhost:9999/next_page_form_http_post"
       "columns": [{
         "col_name": "col 1",
         "dom_query": "#col1"
@@ -52,10 +51,33 @@ describe "Next page click", ()->
       expect(response_obj.status).toEqual "success"
       expect(typeof response_obj.message).toEqual "object"
       expect(typeof response_obj.message.next_page).toEqual "string"
+      expect(response_obj.message.next_page_method).toEqual "post"
       expect(response_obj.message.next_page).toEqual "http://localhost:9999/success"
       expect(typeof response_obj.message.next_page_post_data).toEqual "object"
       expect(response_obj.message.next_page_post_data["my_val"]).toEqual "what to do"
       done()
+
+  it "should return next page HTTP GET url and all form Data through click", (done)->
+    post_data = KSON.stringify(
+      "origin_url" : "http://localhost:9999/next_page_form_http_get"
+      "columns": [{
+        "col_name": "col 1",
+        "dom_query": "#col1"
+      }],
+      "next_page" :
+        "dom_query" : '#next_page'
+        "click" : true
+    )
+    
+    testClient post_data, (response_obj)-> 
+      expect(response_obj.status).toEqual "success"
+      expect(typeof response_obj.message).toEqual "object"
+      expect(typeof response_obj.message.next_page).toEqual "string"
+      expect(response_obj.message.next_page_method).toEqual "get"
+      expect(response_obj.message.next_page).toEqual "http://localhost:9999/success"
+      expect(typeof response_obj.message.next_page_post_data).toEqual "object"
+      expect(response_obj.message.next_page_post_data["my_val"]).toEqual "what to do"
+      done()      
 
   it "should return next page HTTP GET url through click", (done)->
     post_data = KSON.stringify(
