@@ -79,19 +79,31 @@ var KrakeDomElements = {
 
   // Returns an array of dom elements nodes given a Column
   getDomNodes : function(curr_column) {
+    var self = this;
+
     dom_elements = [];
 
-    if( (typeof jQuery == "function") && curr_column.dom_query) {
+    // When using jQuery to get dom within a dom_container 
+    if( (typeof jQuery == "function") && curr_column.dom_container && curr_column.dom_query) {
+      jQuery(curr_column.dom_container).each(function(index, curr_container) {
+        item = jQuery(curr_container).find(curr_column.dom_query)[0] || self.dummyDomPlaceHolder();
+        dom_elements.push(item);
+      });
+
+    // When using jQuery to get dom
+    } else if( (typeof jQuery == "function") && curr_column.dom_query) {
       jQuery(curr_column.dom_query).each(function(index, item) {
         dom_elements.push(item);
       });
 
+    // When using document.querySelectAll to get dom
     } else if( (typeof jQuery != "function") && curr_column.dom_query) {
       doc_els = document.querySelectorAll(curr_column.dom_query);
       for(var x = 0; x < doc_els.length; x++ ) {
         dom_elements.push(doc_els[x]);
       }
 
+    // When using xPath to get dom
     } else if(curr_column.xpath) {
       var xPathResults = document.evaluate(curr_column.xpath, document);
       while(curr_item = xPathResults.iterateNext()) {
@@ -100,6 +112,15 @@ var KrakeDomElements = {
     }
 
     return dom_elements;
+  },
+
+  // Returns a dummy place holder that behaves like a dom element but returns only empty values
+  dummyDomPlaceHolder : function() {
+    return {
+      getAttribute: function() {
+        return "";
+      }
+    }
   },
 
   // Clicks on dom elements defined in the to_click object

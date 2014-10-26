@@ -85,6 +85,9 @@ app.get '/to_mouseover_slowly', (req, res)->
 app.get '/sudden_death', (req, res)->
   res.render 'sudden_death'
 
+app.get '/dom_container', (req, res)->
+  res.render 'dom_container'
+
 exports = module.exports = app
 
 if !module.parent
