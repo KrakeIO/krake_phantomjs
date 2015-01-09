@@ -2,7 +2,7 @@
     "author": "Gary Teh <garyjob@gmail.com>",
     "name": "phantomjs_server"
   , "main": "./server.js"
-  , "version": "0.0.1"
+  , "version": "0.0.2"
   , "private": true
   , "engines": {
     "node": "=0.8.8"

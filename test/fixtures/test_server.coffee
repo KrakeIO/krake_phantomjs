@@ -88,6 +88,10 @@ app.get '/sudden_death', (req, res)->
 app.get '/dom_container', (req, res)->
   res.render 'dom_container'
 
+app.get '/read_headers', (req, res)->
+  res.render 'read_headers', 
+    data: req.headers
+
 exports = module.exports = app
 
 if !module.parent

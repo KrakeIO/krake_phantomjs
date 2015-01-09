@@ -8,7 +8,7 @@ describe "domElements", ()->
     app.listen 9999
   
   afterEach ()=>
-    app.close()  
+    app.close() 
   
   it "should return correct element value", (done)->
     post_data = KSON.stringify(

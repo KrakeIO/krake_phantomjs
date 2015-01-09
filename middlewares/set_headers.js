@@ -11,6 +11,11 @@ var setHeaders = function(page, krakeQueryObject, next) {
     page.settings['userAgent'] = 
       'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36';
   }
+
+  if(krakeQueryObject.headers) {
+    page.customHeaders = krakeQueryObject.headers
+  }
+
   next();
 }
 
