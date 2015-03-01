@@ -65,7 +65,7 @@ coffee simple_client.coffee
 ```
 
 ## Reference to full API
-see [Krake Definition API] (https://krake.io/docs/define-krake)
+see [Krake Definition API] (https://getdata.io/docs/define-data)
 
 ## Running the harvesting service
 ```console
@@ -101,10 +101,33 @@ phantomjs server.js # Start service
 jasmine-node --coffee test # do unit test against server
 ```
 
-## User Docker
-Building the latest image
+## Deployment
+
+#### Building the latest image
 ```console
-docker build -t krake_phantomjs .
+cd <<PATH/TO/REPOSITORY>>
+docker build -t mbp .
 ```
 
-Spin up a container using the latest image
+#### Spin up a container using the latest image
+```console
+docker run -p 9701:9701 -v <<PATH/TO/REPOSITORY>>/:/root/krake_phantomjs -d mbp
+```
+
+#### Observing the log
+```console
+docker ps # to get the docker <<container_id>>
+docker logs -f <<container_id>>
+```
+
+#### Pinging the server
+Mac OS
+```console
+boot2docker ip # to get the IP address of the docker container running locally
+curl http://<<IP address>>:9701
+```
+
+Ubuntu
+```console
+curl http://0.0.0.0:9701
+```

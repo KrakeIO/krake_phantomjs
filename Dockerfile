@@ -23,10 +23,10 @@ RUN sudo ln -s /usr/local/share/phantomjs-1.9.2-linux-x86_64/bin/phantomjs /usr/
 RUN sudo ln -s /usr/local/share/phantomjs-1.9.2-linux-x86_64/bin/phantomjs /bin/phantomjs
 
 # Clone the conf files into the docker container
-RUN git clone https://github.com/KrakeIO/krake_phantomjs.git $HOME/krake_phantomjs
+RUN git clone https://github.com/KrakeIO/krake_phantomjs.git $HOME/krake_phantomjs_temp
 
 # Update the Krake PhantomJs file
-RUN cd $HOME/krake_phantomjs/ \
+RUN cd $HOME/krake_phantomjs_temp/ \
   && git pull origin master
 
 # Installing NodeJs
@@ -38,23 +38,9 @@ RUN /bin/bash -c "source $HOME/.bashrc \
     && nvm install v0.10.28 \
     && nvm use v0.10.28 \
     && npm install -g forever \
-    && cd $HOME/krake_phantomjs/ \
+    && cd $HOME/krake_phantomjs_temp/ \
     && npm install "
+    
 
-# Ensures the krake_phantomjs repository is updated everytime during the bash login
-RUN echo 'echo "Updating to latest version of krake_phantomjs"' >> $HOME/.profile
-RUN echo 'cd $HOME/krake_phantomjs \
-  && git pull origin master' >> $HOME/.profile
-
-# Setting up the log folder
-RUN mkdir $HOME/logs
-
-# Setting up the auto run
-RUN echo '. ~/.nvm/nvm.sh' >> $HOME/.profile
-RUN echo 'nvm use v0.10.28' >> $HOME/.profile
-RUN echo 'cd $HOME/krake_phantomjs \
-  && git pull origin master' >> $HOME/.profile
-
-RUN echo ''
 EXPOSE 9701
-CMD [ "phantomjs", "/root/krake_phantomjs/server.js", ">>", "/root/logs/phantom" ]
+CMD [ "phantomjs", "/root/krake_phantomjs/server.js" ]
