@@ -52,6 +52,9 @@ RUN mkdir $HOME/logs
 # Setting up the auto run
 RUN echo '. ~/.nvm/nvm.sh' >> $HOME/.profile
 RUN echo 'nvm use v0.10.28' >> $HOME/.profile
+RUN echo 'cd $HOME/krake_phantomjs \
+  && git pull origin master' >> $HOME/.profile
 
+RUN echo ''
 EXPOSE 9701
 CMD [ "phantomjs", "/root/krake_phantomjs/server.js", ">>", "/root/logs/phantom" ]

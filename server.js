@@ -74,7 +74,7 @@ var service = server.listen(9701, function(req, res) {
   if(req.url == '/') {
     res.statusCode = 200;
     console.log(new Date() + ': Krake Server ping');
-    res.write('I am Krake');
+    res.write('I am Krake at 1st March 2015');
     res.close();
   
   // The actual route that Krake request will hit
