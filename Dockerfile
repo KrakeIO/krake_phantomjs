@@ -40,7 +40,7 @@ RUN /bin/bash -c "source $HOME/.bashrc \
     && npm install -g forever \
     && cd $HOME/krake_phantomjs_temp/ \
     && npm install "
-    
 
+# Runtime configuration
 EXPOSE 9701
 CMD [ "phantomjs", "/root/krake_phantomjs/server.js" ]

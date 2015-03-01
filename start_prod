@@ -1,3 +1,4 @@
-docker build -t mbp .
 git pull origin master
+docker build -t mbp .
+docker ps | grep mbp | awk '{print $1}' | xargs docker stop 
 docker run -p 9701:9701 -v /Users/garyjob/Applications/krake_phantom/:/root/krake_phantomjs -d mbp
