@@ -107,4 +107,4 @@ var service = server.listen(9701, function(req, res) {
 
 });
 
-console.log('Running phantom webserver at port : ', server.port);
+console.log(new Date() + ' : Running phantom webserver at port : ', server.port);
