@@ -100,3 +100,11 @@ phantomjs server.js
 phantomjs server.js # Start service
 jasmine-node --coffee test # do unit test against server
 ```
+
+## User Docker
+Building the latest image
+```console
+docker build -t krake_phantomjs .
+```
+
+Spin up a container using the latest image

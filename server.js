@@ -73,6 +73,7 @@ var service = server.listen(9701, function(req, res) {
   // Default route for testing purposes 
   if(req.url == '/') {
     res.statusCode = 200;
+    console.log(new Date() + ': Krake Server ping');
     res.write('I am Krake');
     res.close();
   
