@@ -7,6 +7,8 @@ RUN apt-get update
 # Install GIT
 RUN sudo apt-get -y install git-core git
 
+
+
 # Install PhantomJS dependencies
 RUN apt-get -y install fontconfig
 RUN apt-get -y install wget
@@ -22,24 +24,51 @@ RUN sudo ln -s /usr/local/share/phantomjs-1.9.2-linux-x86_64/bin/phantomjs /usr/
 RUN sudo ln -s /usr/local/share/phantomjs-1.9.2-linux-x86_64/bin/phantomjs /usr/bin/phantomjs
 RUN sudo ln -s /usr/local/share/phantomjs-1.9.2-linux-x86_64/bin/phantomjs /bin/phantomjs
 
-# Clone the conf files into the docker container
-RUN git clone https://github.com/KrakeIO/krake_phantomjs.git $HOME/krake_phantomjs_temp
 
-# Update the Krake PhantomJs file
-RUN cd $HOME/krake_phantomjs_temp/ \
-  && git pull origin master
 
 # Installing NodeJs
 RUN git clone https://github.com/creationix/nvm.git $HOME/.nvm
 
-#nvm configuration
+# nvm configuration
 RUN /bin/bash -c "source $HOME/.bashrc \
     && . ~/.nvm/nvm.sh \
-    && nvm install v0.10.28 \
-    && nvm use v0.10.28 \
-    && npm install -g forever \
-    && cd $HOME/krake_phantomjs_temp/ \
+    && nvm install v0.10.28 "
+
+# Coffee setup
+RUN sudo ln -s /root/.nvm/v0.10.28/bin/coffee /usr/local/share/coffee
+RUN sudo ln -s /root/.nvm/v0.10.28/bin/coffee /usr/local/bin/coffee
+RUN sudo ln -s /root/.nvm/v0.10.28/bin/coffee /usr/bin/coffee
+RUN sudo ln -s /root/.nvm/v0.10.28/bin/coffee /bin/coffee
+
+# Node setup
+RUN sudo ln -s /root/.nvm/v0.10.28/bin/node /usr/local/share/node
+RUN sudo ln -s /root/.nvm/v0.10.28/bin/node /usr/local/bin/node
+RUN sudo ln -s /root/.nvm/v0.10.28/bin/node /usr/bin/node
+RUN sudo ln -s /root/.nvm/v0.10.28/bin/node /bin/node
+
+# Environment setup 
+RUN echo ". ~/.nvm/nvm.sh" >> $HOME/.bashrc
+RUN echo "nvm use v0.10.28" >> $HOME/.bashrc
+
+RUN echo ". ~/.nvm/nvm.sh" >> $HOME/.profile
+RUN echo "nvm use v0.10.28" >> $HOME/.profile
+
+
+
+# use changes to package.json to force Docker not to use the cache
+# when we change our application's nodejs dependencies:
+ADD package.json /tmp/package.json
+RUN /bin/bash -c "source $HOME/.bashrc \
+    && . ~/.nvm/nvm.sh \
+    && nvm use v0.10.28 \ 
+    && cd /tmp \
     && npm install "
+
+RUN mkdir -p /root/krake_phantomjs && cp -a /tmp/node_modules /root/krake_phantomjs
+
+# Exposing the files from the current directory to the docker container
+WORKDIR /root/krake_phantomjs
+ADD . /root/krake_phantomjs
 
 # Runtime configuration
 EXPOSE 9701

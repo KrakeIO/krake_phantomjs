@@ -1,4 +1,13 @@
 git pull origin master
 docker build -t mbp .
 docker ps | grep mbp | awk '{print $1}' | xargs docker stop 
-docker run -p 9701:9701 -v /Users/garyjob/Applications/krake_phantom/:/root/krake_phantomjs -d mbp
+docker rm -f krake_phantomjs 
+
+# Running a daemonized container
+docker run -p 9701:9701 --name krake_phantomjs -d mbp
+
+# For local development when we want to refresh the code constantly
+# docker run -p 9701:9701 -v /Users/garyjob/Applications/krake_phantom/:/root/krake_phantomjs --name krake_phantomjs -d mbp
+
+# For getting in interactive mode when the container is running
+# docker exec -i -t krake_phantomjs /bin/bash
