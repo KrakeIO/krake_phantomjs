@@ -30,6 +30,7 @@ RUN sudo ln -s /usr/local/share/phantomjs-1.9.2-linux-x86_64/bin/phantomjs /bin/
 RUN git clone https://github.com/creationix/nvm.git $HOME/.nvm
 
 # nvm configuration
+RUN touch $HOME/.bashrc
 RUN /bin/bash -c "source $HOME/.bashrc \
     && . ~/.nvm/nvm.sh \
     && nvm install v0.10.28 "
