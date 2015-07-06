@@ -82,6 +82,9 @@ app.get '/to_mouseover', (req, res)->
 app.get '/to_mouseover_slowly', (req, res)->
   res.render 'to_mouseover_slowly'
 
+app.get '/times_clicked', (req, res)->
+  res.render 'times_clicked'
+
 app.get '/sudden_death', (req, res)->
   res.render 'sudden_death'
 

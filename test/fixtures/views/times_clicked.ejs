@@ -1,0 +1,13 @@
+<script>
+  var times_clicked = 0;
+  jQuery(document).ready(function(){
+    jQuery("#press-it").click(function(){
+      setTimeout(function(){
+        times_clicked += 1;
+        jQuery("#times-clicked").html(times_clicked);
+      }, 100);
+    });
+  });
+</script>
+<div id="times-clicked">0</div>
+<button id="press-it" value="press on me">

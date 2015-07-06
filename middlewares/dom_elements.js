@@ -33,9 +33,12 @@ var domElements = function(page, krakeQueryObject, next) {
   page.evaluate(function(krakeQueryObject) {
 
     KrakeDomElements.init(krakeQueryObject);
-    KrakeDomElements.processColumns(function(results){
-       window.callPhantom(results);
-    });
+    KrakeDomElements.processPageActions().then(function() {
+      KrakeDomElements.processColumns(function(results){
+         window.callPhantom(results);
+      });      
+    })
+
     
   }, krakeQueryObject); // eo evaluation
 

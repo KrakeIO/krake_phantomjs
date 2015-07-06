@@ -16,9 +16,10 @@ describe "domElements", ()->
       columns: [{
           col_name: "what is on your mind"
           dom_query: "#my_changing_mind"
-          simulate:
-            dom_query: "#my_changing_mind"
-            action: "click"
+      }]
+      page_actions: [{
+        dom_query: "#my_changing_mind"
+        action: "click"
       }]
     )
 
@@ -35,9 +36,10 @@ describe "domElements", ()->
       columns: [{
           col_name: "what is on your mind"
           dom_query: "#my_changing_mind"
-          simulate:
-            dom_query: "#my_changing_mind"
-            action: "mouseover"
+      }]
+      page_actions: [{
+        dom_query: "#my_changing_mind"
+        action: "mouseover"        
       }]
     )
 
@@ -54,10 +56,11 @@ describe "domElements", ()->
       columns: [{
           col_name: "what is on your mind"
           dom_query: "#my_changing_mind"
-          simulate:
-            wait: 120            
-            dom_query: "#my_changing_mind"
-            action: "mouseover"
+      }]
+      page_actions: [{
+        wait: 120            
+        dom_query: "#my_changing_mind"
+        action: "mouseover"
       }]
     )
 
@@ -74,9 +77,10 @@ describe "domElements", ()->
       columns: [{
           col_name: "what is on your mind"
           dom_query: "#my_changing_mind"
-          simulate:
-            dom_query: "#my_changing_mind"
-            action: "mouseover"
+      }]
+      page_actions: [{
+        dom_query: "#my_changing_mind"
+        action: "mouseover"
       }]
     )
 
@@ -86,6 +90,54 @@ describe "domElements", ()->
       expect(typeof response_obj.message.result_rows).toBe "object"
       expect(response_obj.message.result_rows[0]["what is on your mind"]).toEqual "Still glossing over"
       done()
+
+  it "should simulate two click actions and get wrong value when didn't wait", (done)->
+    post_data = KSON.stringify(
+      origin_url : "http://localhost:9999/times_clicked",
+      columns: [{
+          col_name: "how many times"
+          dom_query: "#times-clicked"
+      }]
+      page_actions: [{
+        dom_query: "#press-it"
+        action: "click"
+      },{
+        dom_query: "#press-it"
+        action: "click"        
+      }]
+    )
+
+    testClient post_data, (response_obj)-> 
+      expect(response_obj.status).toEqual "success"
+      expect(typeof response_obj.message).toBe "object"
+      expect(typeof response_obj.message.result_rows).toBe "object"
+      expect(response_obj.message.result_rows[0]["how many times"]).toEqual "0"
+      done()
+
+  it "should simulate two click actions and get correct value when waited", (done)->
+    post_data = KSON.stringify(
+      origin_url : "http://localhost:9999/times_clicked",
+      columns: [{
+          col_name: "how many times"
+          dom_query: "#times-clicked"
+      }]
+      page_actions: [{
+        dom_query: "#press-it"
+        action: "click"
+        wait: 120
+      },{
+        dom_query: "#press-it"
+        action: "click"        
+        wait: 120
+      }]
+    )
+
+    testClient post_data, (response_obj)-> 
+      expect(response_obj.status).toEqual "success"
+      expect(typeof response_obj.message).toBe "object"
+      expect(typeof response_obj.message.result_rows).toBe "object"
+      expect(response_obj.message.result_rows[0]["how many times"]).toEqual "2"
+      done()      
 
   it "should return empty result_rows even if no results were harvested", (done)->
     post_data = KSON.stringify(

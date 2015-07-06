@@ -4,6 +4,7 @@ var KrakeDomElements = {
   init: function(krakeQueryObject) {
     var self = this;
     self.columns = krakeQueryObject.columns;
+    self.page_actions = krakeQueryObject.page_actions || [];
     self.results = krakeQueryObject.jobResults || {};
     self.results.logs = self.results.logs || [];
     self.results.result_rows = self.results.result_rows || [];
@@ -121,6 +122,43 @@ var KrakeDomElements = {
         return "";
       }
     }
+  },
+
+  // Returns Deferred Promise
+  processPageActions: function() {
+    var self = this;
+    deferred = Q.defer();
+    self.processNextPageAction( deferred );
+    return deferred.promise;
+  },  
+
+  // Performs the next action in the page
+  processNextPageAction: function(deferred_obj) {
+    var self = this;
+
+    // When there is still some more page action
+    if( self.page_actions.length > 0 ) {
+      var current_simulation = self.page_actions.shift();  
+      self.toSimulate(current_simulation);
+      
+      // If is required to wait after simulation
+      if( current_simulation.wait ) {
+        setTimeout(function() {
+          self.processNextPageAction(deferred_obj);
+
+        }, current_simulation.wait);
+
+      // If not required to wait after simulation
+      } else {
+        self.processNextPageAction(deferred_obj);
+        
+      }
+
+    } else {
+      deferred_obj && deferred_obj.resolve();
+
+    }
+
   },
 
   // Clicks on dom elements defined in the to_click object
