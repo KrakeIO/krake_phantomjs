@@ -1,10 +1,10 @@
 git pull origin master
-docker build -t mbp .
-docker ps | grep mbp | awk '{print $1}' | xargs docker stop 
-docker rm -f krake_phantomjs 
+sudo docker build -t mbp .
+sudo docker ps | grep mbp | awk '{print $1}' | xargs sudo docker stop 
+sudo docker rm -f krake_phantomjs 
 
 # Running a daemonized container
-docker run -p 9701:9701 --name krake_phantomjs -d mbp
+sudo docker run -p 9701:9701 --name krake_phantomjs -d mbp
 
 # For local development when we want to refresh the code constantly
 # docker run -p 9701:9701 -v /Users/garyjob/Applications/krake_phantom/:/root/krake_phantomjs --name krake_phantomjs -d mbp
