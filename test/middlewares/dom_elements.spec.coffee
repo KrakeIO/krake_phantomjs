@@ -139,6 +139,42 @@ describe "domElements", ()->
       expect(response_obj.message.result_rows[0]["how many times"]).toEqual "2"
       done()      
 
+  it "should simulate scrolling to the bottom of the page", (done)->
+    post_data = KSON.stringify(
+      origin_url : "http://localhost:9999/scroll_bottom",
+      columns: [{
+          col_name: "what is at the bottom"
+          dom_query: "#at-the-bottom"
+      }]
+      page_actions: [{
+        action: "scroll_bottom"
+        wait: 120
+      }]
+    )
+
+    testClient post_data, (response_obj)-> 
+      expect(response_obj.status).toEqual "success"
+      expect(typeof response_obj.message).toBe "object"
+      expect(typeof response_obj.message.result_rows).toBe "object"
+      expect(response_obj.message.result_rows[0]["what is at the bottom"]).toEqual "Captain Jack Sparrow"
+      done()
+
+  it "should getting the wrong response when not scrolling to the bottom of the page", (done)->
+    post_data = KSON.stringify(
+      origin_url : "http://localhost:9999/scroll_bottom",
+      columns: [{
+          col_name: "what is at the bottom"
+          dom_query: "#at-the-bottom"
+      }]
+    )
+
+    testClient post_data, (response_obj)-> 
+      expect(response_obj.status).toEqual "success"
+      expect(typeof response_obj.message).toBe "object"
+      expect(typeof response_obj.message.result_rows).toBe "object"
+      expect(response_obj.message.result_rows[0]["what is at the bottom"]).toEqual "Still swimming"
+      done()      
+
   it "should return empty result_rows even if no results were harvested", (done)->
     post_data = KSON.stringify(
       origin_url : "http://localhost:9999/sudden_death",

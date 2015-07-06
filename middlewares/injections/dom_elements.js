@@ -127,7 +127,7 @@ var KrakeDomElements = {
   // Returns Deferred Promise
   processPageActions: function() {
     var self = this;
-    deferred = Q.defer();
+    var deferred = Q.defer();
     self.processNextPageAction( deferred );
     return deferred.promise;
   },  
@@ -139,20 +139,11 @@ var KrakeDomElements = {
     // When there is still some more page action
     if( self.page_actions.length > 0 ) {
       var current_simulation = self.page_actions.shift();  
-      self.toSimulate(current_simulation);
-      
-      // If is required to wait after simulation
-      if( current_simulation.wait ) {
-        setTimeout(function() {
-          self.processNextPageAction(deferred_obj);
 
-        }, current_simulation.wait);
-
-      // If not required to wait after simulation
-      } else {
+      self.toSimulate(current_simulation).then(function() {
         self.processNextPageAction(deferred_obj);
-        
-      }
+
+      });
 
     } else {
       deferred_obj && deferred_obj.resolve();
@@ -161,14 +152,43 @@ var KrakeDomElements = {
 
   },
 
-  // Clicks on dom elements defined in the to_click object
+  /** 
+  Interacts with dom elements on Page before proceeding to extract the data in the page
+
+  Params:
+    simulate: Object        
+      dom_query: String
+      wait: Integer
+      action: String
+        click
+        mouseover
+        scroll_bottom
+  **/
   toSimulate : function(simulate) {
     var self = this;    
-    dom_elements = self.getDomNodes(simulate);
-    self.results.logs.push("simulating " +  simulate.action + " for " + dom_elements.length + " dom items");
-    dom_elements.forEach(function(dom_node) {
-      jQuery(dom_node).simulate(simulate.action);
-    });
+    var deferred = Q.defer();
+    var time_to_wait = simulate.wait || 0;
+
+    switch( simulate.action) {
+
+      case "scroll_bottom":
+        window.scrollTo(0,document.body.scrollHeight);
+        break;
+
+      default: 
+        dom_elements = self.getDomNodes(simulate);
+        self.results.logs.push("simulating " +  simulate.action + " for " + dom_elements.length + " dom items");
+        dom_elements.forEach(function(dom_node) {
+          jQuery(dom_node).simulate(simulate.action);
+        });      
+    }
+
+    setTimeout(function() {
+      deferred.resolve();
+
+    }, time_to_wait);    
+
+    return deferred.promise;
   },
 
   toWait :function() {
