@@ -33,10 +33,12 @@ var domElements = function(page, krakeQueryObject, next) {
   page.evaluate(function(krakeQueryObject) {
 
     KrakeDomElements.init(krakeQueryObject);
+
     KrakeDomElements.processPageActions().then(function() {
-      KrakeDomElements.processColumns(function(results){
-         window.callPhantom(results);
-      });      
+      return KrakeDomElements.processColumns();
+
+    }).then(function(results) {
+      window.callPhantom(results);
     })
 
     

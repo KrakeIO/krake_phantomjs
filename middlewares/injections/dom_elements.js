@@ -17,12 +17,22 @@ var KrakeDomElements = {
 
   processColumns: function(callback) {
     var self = this;
-    if(self.columns.length > 0) self.processNextColumn(0, callback);
+    var deferred = Q.defer();
+
+    if(self.columns.length > 0) {
+      self.processNextColumn( deferred);
+
+    } else {
+      deferred.resolve( self.results );
+    }
+    return deferred.promise;
+
+    
   },
 
-  processNextColumn: function(index, callback) {
+  processNextColumn: function( deferred ) {
     var self = this;
-    var curr_column = self.columns[index];
+    var curr_column = self.columns.shift();
     self.getDomNodesValues(curr_column, function(harvested_values) {
 
       // Fetches the results into rows
@@ -41,10 +51,11 @@ var KrakeDomElements = {
         
       }
 
-      if(index < self.columns.length - 1) {
-        self.processNextColumn(index + 1, callback);
+      if( self.columns.length > 0 ) {
+        self.processNextColumn( deferred );
+
       } else {
-        callback && callback(self.results);
+        deferred && deferred.resolve( self.results );
       }
 
     });
