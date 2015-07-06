@@ -45,12 +45,11 @@ var processPage = function(krakeQueryObject, callback) {
     kp.use(require('./middlewares/set_cookies'));
     kp.use(require('./middlewares/no_css'));
     kp.use(require('./middlewares/open_page'));
+    kp.use(require('./middlewares/waitup'));    
     kp.use(require('./middlewares/get_cookies'));    
-    kp.use(require('./middlewares/render_page'));
     kp.use(require('./middlewares/include_methods'));
     kp.use(require('./middlewares/setup_json'));
-    kp.use(require('./middlewares/include_jquery'));
-    kp.use(require('./middlewares/waitup'));
+    kp.use(require('./middlewares/include_jquery'));    
     kp.use(require('./middlewares/click_elements'));
     kp.use(require('./middlewares/dom_elements'));
     kp.use(require('./middlewares/var_query'));
@@ -58,6 +57,7 @@ var processPage = function(krakeQueryObject, callback) {
     kp.use(require('./middlewares/next_page_get'));
     kp.use(require('./middlewares/next_page_click'));
     kp.use(require('./middlewares/sudden_death'));
+    kp.use(require('./middlewares/render_page'));
     kp.use(require('./middlewares/close_page'));
     kp.process(page, krakeQueryObject, function(status, results) {
       callback && callback(status, results);
