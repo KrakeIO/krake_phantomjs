@@ -98,6 +98,9 @@ app.get '/read_headers', (req, res)->
   res.render 'read_headers', 
     data: req.headers
 
+app.get '/wait_for', (req, res)->
+  res.render 'wait_for'
+
 exports = module.exports = app
 
 if !module.parent

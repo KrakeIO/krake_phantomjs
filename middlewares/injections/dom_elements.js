@@ -183,6 +183,7 @@ var KrakeDomElements = {
     switch( simulate.action) {
 
       case "scroll_bottom":
+        self.results.logs.push("simulating scrolling to the bottom of the page");
         window.scrollTo(0,document.body.scrollHeight);
         break;
 
