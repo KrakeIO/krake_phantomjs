@@ -11,7 +11,7 @@ var setCookies = function(page, krakeQueryObject, next) {
   if(!krakeQueryObject.disable_cookies && krakeQueryObject.cookies) {
     console.log('    setting cookies provided');
     for( x = 0; x < krakeQueryObject.cookies.length; x++) {
-      console.log('      ' + krakeQueryObject.cookies[x].name + ' : ' + krakeQueryObject.cookies[x].value);
+      console.log('      ' + krakeQueryObject.cookies[x].domain + ' : '+ krakeQueryObject.cookies[x].name + ' : ' + krakeQueryObject.cookies[x].value );
       add_results = phantom.addCookie({
         name : krakeQueryObject.cookies[x].name, 
         value : krakeQueryObject.cookies[x].value, 
