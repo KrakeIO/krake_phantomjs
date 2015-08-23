@@ -101,6 +101,10 @@ app.get '/read_headers', (req, res)->
 app.get '/wait_for', (req, res)->
   res.render 'wait_for'
 
+app.post '/set_posted_cookie', (req, res)->
+  res.render 'set_posted_cookie', { post_cookies: req.body.post_cookies }
+
+
 exports = module.exports = app
 
 if !module.parent

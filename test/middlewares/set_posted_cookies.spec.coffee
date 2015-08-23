@@ -1,13 +1,21 @@
+KSON = require 'kson'
+testClient = require '../fixtures/test_client'
+app = require '../fixtures/test_server'
+
 setPostedCookies = require '../../middlewares/set_posted_cookies'
 
 describe "set_posted_cookies", ()->
 
-  it "should open page with post method when method is defined", (done)->
+  beforeEach ()=>  
+    app.listen 9999
+  
+  afterEach ()=>
+    app.close()
+
+  it "should open attach stringified cookies as post params ", (done)->
 
     global.phantom = {}
     page = {}
-    phantom.addCookie = ()->
-    spyOn(phantom, 'addCookie').andCallThrough()
     
     krakeQueryObject =      
       "origin_url": "http://localhost:9999/",
@@ -22,7 +30,7 @@ describe "set_posted_cookies", ()->
         }
       ],
       "set_post_cookies": true,
-      "post_cookies": [
+      "cookies": [
           {
               "domain": "localhost",
               "hostOnly": true,
@@ -37,5 +45,39 @@ describe "set_posted_cookies", ()->
       ]
       
     setPostedCookies page, krakeQueryObject, ()->
-      expect(phantom.addCookie).toHaveBeenCalled()
+      expect(typeof krakeQueryObject.post_data).toBe "object"
+      expect(typeof krakeQueryObject.post_data.post_cookies).toBe "string"
+      done()
+
+  it "should send stringified cookies as post params to test server", (done)->
+    cookies = [
+          {
+              "domain": "localhost",
+              "hostOnly": true,
+              "httpOnly": false,
+              "name": "X-LI-IDC",
+              "path": "/cookie",
+              "secure": false,
+              "session": true,
+              "storeId": "0",
+              "value": "C1"
+          }
+      ]
+    post_data = KSON.stringify(
+      "origin_url": "http://localhost:9999/set_posted_cookie"
+      "method" : "post"
+      "columns": [{
+        "col_name": "res1"
+        "dom_query": "#post_cookies"
+      }],
+      "set_post_cookies": true,
+      "cookies": cookies
+    )
+    
+    testClient post_data, (response_obj)-> 
+      expect(response_obj.status).toEqual "success"
+      expect(typeof response_obj.message).toBe "object"
+      expect(typeof response_obj.message.result_rows).toBe "object"
+      expect(typeof response_obj.message.result_rows[0]).toBe "object"
+      expect( JSON.parse( response_obj.message.result_rows[0]['res1'] ) ).toEqual cookies
       done()
