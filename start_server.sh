@@ -1,0 +1,1 @@
+nohup phantomjs --ignore-ssl-errors=true --ssl-protocol=any --load-images=no server.js  > ~/logs/phantom 2>&1 &
