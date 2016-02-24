@@ -7,6 +7,10 @@ var openPage = function(page, krakeQueryObject, next) {
       console.log('  ', item.file, ':', item.line);
     })
   };
+
+  page.onResourceError = function(resourceError) {
+    console.error('    ',resourceError.url + ': ' + resourceError.errorString);
+  };  
   
   // the callback that is triggered after the page is open
   callback = function(status) {
