@@ -103,24 +103,45 @@ jasmine-node --coffee test # do unit test against server
 
 ## Deployment
 
-#### Building the latest image
+#### Monit and Upstart
+
+Copy upstart configuration files
+```
+cp ./upstart/krake_phantomjs.conf /etc/init
+```
+
+Monit
+```
+Copy Monit configuration files
+cp ./config/monit/krake_phantomjs.conf /etc/monit/conf.d
+cp ./config/monit/status.conf /etc/monit/conf.d
+
+# Check for syntax error
+monit -t
+
+# load the services
+monit reload
+```
+
+#### Docker
+###### Building the latest image
 ```console
 cd <<PATH/TO/REPOSITORY>>
 docker build -t mbp .
 ```
 
-#### Spin up a container using the latest image
+###### Spin up a container using the latest image
 ```console
 docker run -p 9701:9701 -v <<PATH/TO/REPOSITORY>>/:/root/krake_phantomjs -d mbp
 ```
 
-#### Observing the log
+###### Observing the log
 ```console
 docker ps # to get the docker <<container_id>>
 docker logs -f <<container_id>>
 ```
 
-#### Pinging the server
+###### Pinging the server
 Mac OS
 ```console
 boot2docker ip # to get the IP address of the docker container running locally
