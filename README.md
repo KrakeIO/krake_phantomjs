@@ -3,9 +3,7 @@ PhantomJS Plugin-Based server that interprets a data definition via HTTP post/RE
 from a single corresponding Web Page.
 
 ## Documentation
-
-## Reference to full API
-see [Krake Definition API] (https://getdata.io/docs/define-data?utm_source=github)
+For Reference to full API see [Krake Definition API] (https://getdata.io/docs/define-data?utm_source=github)
 
 #### Making a call to the Krake PhantomJs server
 
