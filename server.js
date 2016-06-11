@@ -1,9 +1,15 @@
 // This files is to be ran using PhantomJS
 
 // Creation of web server
+var fs = require('fs');
 var server = require('webserver').create();
 var KSON = require('./node_modules/kson/lib/kson');
 var KrakeProcessor = require('./controllers/krake_processor');
+
+// Output the PID to the server.pid file
+var path = './temp/server.pid';
+var system = require('system');
+fs.write(path, system.pid, 'w');
 
 // @Description : catchs and displays the error
 phantom.onError = function(msg, trace) {
@@ -111,4 +117,4 @@ var service = server.listen(9701, function(req, res) {
 
 });
 
-console.log(new Date() + ' : Running phantom webserver at port : ', server.port);
+console.log(new Date() + ' : (PID:' + system.pid + ') Running phantom webserver at port : ', server.port);
