@@ -5,3 +5,4 @@ temp/*.pdf
 temp/*.html
 logs/
 logs/server_log
+temp/*.pid
