@@ -2,8 +2,14 @@
 PhantomJS Plugin-Based server that interprets a data definition via HTTP post/RESTFUL API and returns an array of scraped results
 from a single corresponding Web Page.
 
-## Sample calls
-#### Fetching iPhone product name and price from amazon
+## Documentation
+
+## Reference to full API
+see [Krake Definition API] (https://getdata.io/docs/define-data?utm_source=github)
+
+#### Making a call to the Krake PhantomJs server
+
+###### Fetching iPhone product name and price from amazon
 ```console
 curl -v \
   -H "Accept: application/json" \
@@ -21,7 +27,7 @@ curl -v \
   http://krake.io:9701/extract
 ```
 
-#### Response from server
+###### Response from server
 ```console
 {
   "status" : "success",
@@ -38,12 +44,12 @@ curl -v \
 }
 ```
 
-#### To scrape a single page on yahoo
+###### To scrape a single page on yahoo
 ```console
 coffee simple_client.coffee
 ```
 
-#### Response from server
+###### Response from server
 ```console
 {
   "result_rows":[{
@@ -64,22 +70,18 @@ coffee simple_client.coffee
 }
 ```
 
-## Reference to full API
-see [Krake Definition API] (https://getdata.io/docs/define-data)
-
 ## Running the harvesting service
 ```console
 phantomjs server.js
 ```
 
 ## Setup
+Pre-requisites
 - PhantomJS 1.9.2
 
 #### General settings
 - The PhantomJS server will reside on port 9701
 - The main file to call in this repository is server.js
-
-## Documentation
 
 #### File System
 
@@ -103,7 +105,7 @@ jasmine-node --coffee test # do unit test against server
 
 ## Deployment
 
-#### Monit and Upstart
+#### Monit and Upstart on Ubuntu >14
 
 Copy upstart configuration files
 ```
