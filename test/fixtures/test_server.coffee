@@ -105,6 +105,48 @@ app.post '/set_posted_cookie', (req, res)->
   res.render 'set_posted_cookie', { post_cookies: req.body.post_cookies }
 
 
+# Sinatra Extensions
+app.post '/post_cookie_jar', (req, res)->
+  res.cookie 'my_cookie_1', 'my_cookie_value_1'
+  res.cookie 'my_cookie_2', 'my_cookie_value_2'
+  res.render 'post_method',
+    param1: req.body.param1
+    param2: req.body.param2
+
+app.post '/post_cookie_setting', (req, res)->
+  res.render 'display_cookie_method',
+    cookie_name: 'something_to_eat'
+    cookie_value: req.cookies['something_to_eat']
+
+app.get '/get_cookie_setting', (req, res)->
+  res.render 'display_cookie_method',
+    cookie_name: 'something_to_eat'
+    cookie_value: req.cookies['something_to_eat']
+
+app.get '/simple', (req, res)->
+  res.cookie 'get_cookie_2', 'get_cookie_value_2'
+  res.render 'simple'
+
+app.post '/not_simple', (req, res)->
+  res.cookie 'post_cookie_2', 'post_cookie_value_2'
+  res.render 'simple'
+
+app.post '/redirect_request', (req, res)->
+  res.cookie 'post_cookie_1', 'post_cookie_value_1'
+  res.redirect '/simple'
+
+app.get '/redirect_request', (req, res)->
+  res.cookie 'get_cookie_1', 'get_cookie_value_1'
+  res.redirect '/simple'
+
+app.get '/error', (req, res)->
+  res.status 500
+  res.send { error: "GET ERROR"  }
+
+app.post '/error', (req, res)->
+  res.status 500
+  res.send { error: "POST ERROR" }
+
 exports = module.exports = app
 
 if !module.parent
