@@ -147,6 +147,21 @@ app.post '/error', (req, res)->
   res.status 500
   res.send { error: "POST ERROR" }
 
+app.get '/raw_mds_collection', (req, res)->
+  res.render 'raw_mds_collection'
+
+app.get '/raw_amazon_detail', (req, res)->
+  res.render 'raw_amazon_detail'
+
+app.get '/raw_amazon_category', (req, res)->
+  res.render 'raw_amazon_category'  
+
+app.get '/raw_amazon_invalid_utf8', (req, res)->
+  res.render 'raw_amazon_invalid_utf8'
+
+app.get '/raw_zillow', (req, res)->
+  res.render 'raw_zillow'
+
 exports = module.exports = app
 
 if !module.parent
