@@ -162,6 +162,9 @@ app.get '/raw_amazon_invalid_utf8', (req, res)->
 app.get '/raw_zillow', (req, res)->
   res.render 'raw_zillow'
 
+app.get '/doctor_with_many_specialities', (req, res)->
+  res.render 'doctor_with_many_specialities'  
+
 exports = module.exports = app
 
 if !module.parent
