@@ -165,6 +165,9 @@ app.get '/raw_zillow', (req, res)->
 app.get '/doctor_with_many_specialities', (req, res)->
   res.render 'doctor_with_many_specialities'  
 
+app.get '/outer_containers_with_missing_inner_values', (req, res)->
+  res.render 'outer_containers_with_missing_inner_values'  
+
 exports = module.exports = app
 
 if !module.parent
