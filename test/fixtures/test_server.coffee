@@ -27,6 +27,18 @@ app.get '/next_page_js', (req, res)->
 app.get '/next_page_get', (req, res)->
   res.render 'next_page_get'
 
+app.get '/next_page_get_bad_hashtag', (req, res)->
+  res.render 'next_page_get_bad_hashtag'
+
+app.get '/next_page_get_bad_no_href', (req, res)->
+  res.render 'next_page_get_bad_no_href'  
+
+app.get '/next_page_get_bad_same_url', (req, res)->
+  res.render 'next_page_get_bad_same_url'  
+
+app.get '/next_page_get_bad_same_url_absolute', (req, res)->
+  res.render 'next_page_get_bad_same_url_absolute'  
+
 app.get '/next_page_post', (req, res)->
   res.render 'next_page_post'
 
