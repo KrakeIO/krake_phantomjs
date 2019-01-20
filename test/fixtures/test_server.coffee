@@ -39,6 +39,9 @@ app.get '/next_page_get_bad_same_url', (req, res)->
 app.get '/next_page_get_bad_same_url_absolute', (req, res)->
   res.render 'next_page_get_bad_same_url_absolute'  
 
+app.get '/next_page_get_bad_params', (req, res)->
+  res.render 'next_page_get_bad_params'  
+
 app.get '/next_page_post', (req, res)->
   res.render 'next_page_post'
 
@@ -138,6 +141,9 @@ app.get '/get_cookie_setting', (req, res)->
 app.get '/simple', (req, res)->
   res.cookie 'get_cookie_2', 'get_cookie_value_2'
   res.render 'simple'
+
+app.get '/required_attributes', (req, res)->
+  res.render 'required_attributes'
 
 app.post '/not_simple', (req, res)->
   res.cookie 'post_cookie_2', 'post_cookie_value_2'
