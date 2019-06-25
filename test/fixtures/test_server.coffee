@@ -186,6 +186,21 @@ app.get '/doctor_with_many_specialities', (req, res)->
 app.get '/outer_containers_with_missing_inner_values', (req, res)->
   res.render 'outer_containers_with_missing_inner_values'  
 
+app.get '/sandbox', (req, res)->
+  res.render 'sandbox'
+
+app.get '/pagination_1', (req, res)->
+  res.render 'pagination_1'  
+
+app.get '/pagination_2', (req, res)->
+  res.render 'pagination_2'    
+
+app.get '/pagination_3', (req, res)->
+  res.render 'pagination_3'
+
+app.get '/pagination_same_page', (req, res)->
+  res.render 'pagination_same_page'
+
 exports = module.exports = app
 
 if !module.parent
