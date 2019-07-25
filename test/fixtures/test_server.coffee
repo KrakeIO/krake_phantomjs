@@ -201,6 +201,9 @@ app.get '/pagination_3', (req, res)->
 app.get '/pagination_same_page', (req, res)->
   res.render 'pagination_same_page'
 
+app.get '/sec_text', (req, res)->
+  res.render 'sec_text'
+
 exports = module.exports = app
 
 if !module.parent
