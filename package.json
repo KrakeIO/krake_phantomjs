@@ -10,7 +10,7 @@
   , "dependencies": {
       "request" : ""
     , "kson" : "https://github.com/KrakeIO/kson/tarball/master"
-    , "express": "2.5.7"
+    , "express": "4.17.1"
     , "ejs": "0.6.1"
   }
   , "scripts": {
