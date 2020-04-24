@@ -12,6 +12,7 @@
     , "kson" : "https://github.com/KrakeIO/kson/tarball/master"
     , "express": "2.5.7"
     , "ejs": "0.6.1"
+    , "pryjs": "1.0.3"
   }
   , "scripts": {
     "test": "jasmine-node --coffee test/"

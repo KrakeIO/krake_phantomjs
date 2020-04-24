@@ -1,4 +1,5 @@
 express = require 'express'
+pry = require 'pryjs'
 
 app = express.createServer()
 app.configure ()->
@@ -72,9 +73,10 @@ app.get '/success_delayed', (req, res)->
   , 500
 
 app.post '/open_post_page', (req, res)->
-  res.render 'post_method',
+  res.render 'post_method_with_headers',
     param1: req.body.param1
     param2: req.body.param2
+    param3: req.headers["content-type"]    
 
 app.get '/open_cookie_jar', (req, res)->
   res.cookie 'my_cookie', 'my_cookie_value'
