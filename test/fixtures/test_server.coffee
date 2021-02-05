@@ -1,14 +1,15 @@
 express = require 'express'
 pry = require 'pryjs'
+cookieParser = require('cookie-parser')
+bodyParser = require('body-parser')
 
-app = express.createServer()
-app.configure ()->
-  app.set 'views', __dirname + '/views'
-  app.set 'view engine', 'ejs'
-  app.use express.cookieParser()
-  app.use express.bodyParser()
-  app.use(express["static"](__dirname + "/public"))
-  app.use(app.router)
+
+app = express()
+app.set 'views', __dirname + '/views'
+app.set 'view engine', 'ejs'
+app.use cookieParser()
+app.use bodyParser()
+app.use(express["static"](__dirname + "/public"))
 
 app.post '/', (req, res)->
   res.render 'post_method', { param1: req.body.param1, param2: req.body.param2}

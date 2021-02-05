@@ -1,20 +1,23 @@
 {
-    "author": "Gary Teh <garyjob@gmail.com>",
-    "name": "phantomjs_server"
-  , "main": "./server.js"
-  , "version": "0.0.2"
-  , "private": true
-  , "engines": {
+  "author": "Gary Teh <garyjob@gmail.com>",
+  "name": "phantomjs_server",
+  "main": "./server.js",
+  "version": "0.0.2",
+  "private": true,
+  "engines": {
     "node": "=0.8.8"
-  }  
-  , "dependencies": {
-      "request" : ""
-    , "kson" : "https://github.com/KrakeIO/kson/tarball/master"
-    , "express": "2.5.7"
-    , "ejs": "0.6.1"
-    , "pryjs": "1.0.3"
-  }
-  , "scripts": {
+  },
+  "dependencies": {
+    "coffeescript": "^2.5.1",
+    "ejs": "",
+    "express": "",
+    "kson": "https://github.com/KrakeIO/kson/tarball/master",
+    "pryjs": "1.0.3",
+    "request": "",
+    "cookie-parser": "",
+    "body-parser": ""
+  },
+  "scripts": {
     "test": "jasmine-node --coffee test/"
-  }  
+  }
 }
